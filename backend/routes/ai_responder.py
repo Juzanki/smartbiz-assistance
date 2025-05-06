@@ -8,7 +8,7 @@ Access is restricted to users with 'Pro' or 'Business' subscription plans.
 import os
 import logging
 from dotenv import load_dotenv
-from openai import OpenAI
+import openai  # ✅ REPLACED: from openai import OpenAI
 from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import BaseModel
 
@@ -18,7 +18,7 @@ from backend.utils.access_control import require_plan
 
 # ========== Setup ==========
 load_dotenv()
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+openai.api_key = os.getenv("OPENAI_API_KEY")  # ✅ Fixed client setup
 
 # Logger setup
 logger = logging.getLogger(__name__)
@@ -52,11 +52,11 @@ def auto_reply_bot(
         )
 
     try:
-        response = client.chat.completions.create(
+        response = openai.ChatCompletion.create(  # ✅ Replaced client.chat.completions.create
             model="gpt-3.5-turbo",
             messages=[{"role": "user", "content": prompt}]
         )
-        answer = response.choices[0].message.content.strip()
+        answer = response.choices[0].message["content"].strip()
 
         return {
             "user": current_user.email,
