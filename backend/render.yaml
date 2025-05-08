@@ -1,0 +1,9 @@
+﻿services:
+  - type: web
+    name: SmartBiz
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn backend.main:app --host 0.0.0.0 --port .\render.yamlPORT
+    envVars:
+      - key: PORT
+        value: 10000
