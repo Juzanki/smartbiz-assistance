@@ -1,6 +1,11 @@
 import os
-from typing import List
 from dotenv import load_dotenv
+
+# ========== DETECT ENVIRONMENT ========== 
+env_file = ".env.production" if os.environ.get("RENDER") == "true" else ".env"
+load_dotenv(dotenv_path=env_file)
+
+from typing import List
 from fastapi import FastAPI, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
@@ -8,7 +13,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import asyncio
 import logging
 from apscheduler.schedulers.background import BackgroundScheduler
-from backend.routes.order_notification import router as order_notification_router  # Single import
+from backend.routes.order_notification import router as order_notification_router
 
 # ========== LOCAL MODULES ========== 
 from backend.models import Base
@@ -28,23 +33,15 @@ from backend.routes.owner_routes import owner_router
 from backend.middleware.language import language_middleware
 from backend.tasks.scheduler import run_scheduled_task
 from backend.routes.invoice import router as invoice_router
-from apscheduler.schedulers.background import BackgroundScheduler
-
-
 
 # ========== SCHEDULER SETUP ========== 
 scheduler = BackgroundScheduler()
 
-# Task to execute scheduled posts
 def send_scheduled_posts():
-    logging.info("Scheduled posts sent")  # Logging to track posts
+    logging.info("Scheduled posts sent")
 
-# Add job to scheduler
 scheduler.add_job(send_scheduled_posts, 'interval', minutes=1)
-
-# Start scheduler
 scheduler.start()
-
 
 # ========== APP INIT ========== 
 app = FastAPI(
@@ -59,22 +56,21 @@ logging.basicConfig(
     format="%(asctime)s - %(levelname)s - %(message)s"
 )
 
-# ========== CORS MIDDLEWARE ========== 
+# ========== CORS ========== 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],  # Dev only, for production set appropriate origins
+    allow_origins=["http://localhost:5173"],  # For local dev, adjust in production
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 # ========== ENV VARIABLES ========== 
-load_dotenv()
 ACCESS_TOKEN = os.getenv("ACCESS_TOKEN", "")
 PHONE_NUMBER_ID = os.getenv("PHONE_NUMBER_ID", "")
 RECIPIENT_PHONE = os.getenv("RECIPIENT_PHONE", "")
 
-# ========== DATABASE SETUP ========== 
+# ========== DB INIT ========== 
 Base.metadata.create_all(bind=engine)
 
 # ========== DB DEPENDENCY ========== 
@@ -107,10 +103,9 @@ app.include_router(qr_orders.router, prefix="/orders", tags=["Smart Orders"])
 app.include_router(qr_code.router, prefix="/qr", tags=["QR Codes"])
 app.include_router(nfc_orders.router, prefix="/nfc", tags=["NFC"])
 app.include_router(smart_orders.router, prefix="/smart-orders", tags=["Smart Orders"])
-app.include_router(order_notification_router, tags=["Order Notification"])  # Correct import
+app.include_router(order_notification_router, tags=["Order Notification"])
 app.include_router(platforms.router)
 app.include_router(language.router, prefix="/user", tags=["Language"])
-app.add_middleware(language_middleware)
 app.include_router(messages.router)
 app.include_router(inbox.router)
 app.include_router(reply.router)
@@ -120,7 +115,10 @@ app.include_router(orders_routes.router)
 app.include_router(live_stream.router)
 app.include_router(invoice_router)
 
-# ========== SCHEDULED TASKS ========== 
+# ========== MIDDLEWARE ========== 
+app.add_middleware(language_middleware)
+
+# ========== SCHEDULED ASYNC TASKS ========== 
 @app.on_event("startup")
 async def startup_event():
     asyncio.create_task(run_scheduled_task())
@@ -162,7 +160,7 @@ async def send_whatsapp_message(message: WhatsAppMessage):
         "message": message.message
     }
 
-# ========== RUN SERVER ========== 
+# ========== LOCAL RUNNER ========== 
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)

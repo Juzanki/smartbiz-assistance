@@ -8,22 +8,15 @@ from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 
-# Load environment variables from .env file
-load_dotenv()
+# Load environment variables from .env.production (for Render)
+load_dotenv(".env.production")
 
-# Get database credentials from environment
-DB_USER = os.getenv("DB_USER")
-DB_PASSWORD = os.getenv("DB_PASSWORD")
-DB_HOST = os.getenv("DB_HOST", "localhost")
-DB_PORT = os.getenv("DB_PORT", "5432")
-DB_NAME = os.getenv("DB_NAME")
+# Get full DATABASE_URL from environment
+DATABASE_URL = os.getenv("DATABASE_URL")
 
-# Safety check: Ensure all required values exist
-if not all([DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME]):
-    raise ValueError("⚠️ One or more database environment variables are missing in the .env file.")
-
-# Build full DATABASE URL
-DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+# Safety check
+if not DATABASE_URL:
+    raise ValueError("⚠️ 'DATABASE_URL' environment variable is missing. Check .env.production file.")
 
 # Initialize SQLAlchemy engine
 engine = create_engine(DATABASE_URL)
@@ -33,7 +26,6 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 # Declare base for models
 Base = declarative_base()
-
 
 # Dependency to get a database session
 def get_db():

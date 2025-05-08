@@ -1,9 +1,19 @@
-﻿services:
+services:
   - type: web
-    name: SmartBiz
+    name: smartbiz-backend
     env: python
     buildCommand: pip install -r requirements.txt
-    startCommand: uvicorn backend.main:app --host 0.0.0.0 --port .\render.yamlPORT
+    startCommand: uvicorn backend.main:app --host 0.0.0.0 --port $PORT
     envVars:
-      - key: PORT
-        value: 10000
+      - key: RENDER
+        value: "true"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: smartbiz-db
+          property: connectionString
+      - key: ACCESS_TOKEN
+        sync: false
+      - key: PHONE_NUMBER_ID
+        sync: false
+      - key: RECIPIENT_PHONE
+        sync: false
