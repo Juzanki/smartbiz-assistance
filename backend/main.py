@@ -1,49 +1,24 @@
 import os
-from dotenv import load_dotenv
-
-# ========== DETECT ENVIRONMENT ========== 
-env_file = ".env.production" if os.environ.get("RENDER") == "true" else ".env"
-load_dotenv(dotenv_path=env_file)
-
-from typing import List
-from fastapi import FastAPI, Depends, HTTPException, status
-from sqlalchemy.orm import Session
-from pydantic import BaseModel
-from fastapi.middleware.cors import CORSMiddleware
 import asyncio
 import logging
+from typing import List
+from dotenv import load_dotenv
+from fastapi import FastAPI, Depends, HTTPException, status
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
+from sqlalchemy.orm import Session
 from apscheduler.schedulers.background import BackgroundScheduler
-from backend.routes.order_notification import router as order_notification_router
 
-# ========== LOCAL MODULES ========== 
+# ========== LOAD .env ========== 
+load_dotenv(".env")  # Local only
+
+# ========== DATABASE SETUP ========== 
+from backend.db import SessionLocal, engine
 from backend.models import Base
 from backend.schemas import UserCreate, User as UserResponse
 from backend.crud import get_user, create_user, get_users
-from backend.db import SessionLocal, engine
-from backend.auth_routes import router as auth_router
-from backend.routes import settings_routes, orders_routes, live_stream
-from backend.routes import (
-    register, auth_routes, logout, profile, forgot_password, pay_mpesa,
-    ai_responder, admin_routes, subscription, telegram_bot, broadcast,
-    negotiation_bot, voice_assistant, qr_generator, nfc_handler, qr_orders,
-    qr_code, nfc_orders, smart_orders, platforms, language, messages, inbox,
-    reply, schedule
-)
-from backend.routes.owner_routes import owner_router
-from backend.middleware.language import language_middleware
-from backend.tasks.scheduler import run_scheduled_task
-from backend.routes.invoice import router as invoice_router
 
-# ========== SCHEDULER SETUP ========== 
-scheduler = BackgroundScheduler()
-
-def send_scheduled_posts():
-    logging.info("Scheduled posts sent")
-
-scheduler.add_job(send_scheduled_posts, 'interval', minutes=1)
-scheduler.start()
-
-# ========== APP INIT ========== 
+# ========== FASTAPI APP INIT ========== 
 app = FastAPI(
     title="SmartBiz Assistant API",
     description="Powerful SaaS backend for automating business operations",
@@ -59,18 +34,13 @@ logging.basicConfig(
 # ========== CORS ========== 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],  # For local dev, adjust in production
+    allow_origins=["http://localhost:5173"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# ========== ENV VARIABLES ========== 
-ACCESS_TOKEN = os.getenv("ACCESS_TOKEN", "")
-PHONE_NUMBER_ID = os.getenv("PHONE_NUMBER_ID", "")
-RECIPIENT_PHONE = os.getenv("RECIPIENT_PHONE", "")
-
-# ========== DB INIT ========== 
+# ========== INIT DB ========== 
 Base.metadata.create_all(bind=engine)
 
 # ========== DB DEPENDENCY ========== 
@@ -81,7 +51,35 @@ def get_db():
     finally:
         db.close()
 
+# ========== ENV VARS ========== 
+ACCESS_TOKEN = os.getenv("ACCESS_TOKEN", "")
+PHONE_NUMBER_ID = os.getenv("PHONE_NUMBER_ID", "")
+RECIPIENT_PHONE = os.getenv("RECIPIENT_PHONE", "")
+
+# ========== TASK SCHEDULER ========== 
+scheduler = BackgroundScheduler()
+
+def send_scheduled_posts():
+    logging.info("✅ Scheduled posts sent")
+
+scheduler.add_job(send_scheduled_posts, "interval", minutes=1)
+scheduler.start()
+
 # ========== ROUTES ========== 
+from backend.auth_routes import router as auth_router
+from backend.routes import (
+    register, auth_routes, logout, profile, forgot_password, pay_mpesa,
+    ai_responder, admin_routes, subscription, telegram_bot, broadcast,
+    negotiation_bot, voice_assistant, qr_generator, nfc_handler, qr_orders,
+    qr_code, nfc_orders, smart_orders, platforms, language, messages, inbox,
+    reply, schedule, settings_routes, orders_routes, live_stream
+)
+from backend.routes.order_notification import router as order_notification_router
+from backend.routes.owner_routes import owner_router
+from backend.routes.invoice import router as invoice_router
+from backend.middleware.language import language_middleware
+from backend.tasks.scheduler import run_scheduled_task
+
 app.include_router(auth_router, tags=["Auth"])
 app.include_router(register.router, prefix="/register-user", tags=["Register"])
 app.include_router(auth_routes.router, prefix="/auth", tags=["Auth-Routes"])
@@ -118,7 +116,7 @@ app.include_router(invoice_router)
 # ========== MIDDLEWARE ========== 
 app.add_middleware(language_middleware)
 
-# ========== SCHEDULED ASYNC TASKS ========== 
+# ========== STARTUP TASK ========== 
 @app.on_event("startup")
 async def startup_event():
     asyncio.create_task(run_scheduled_task())
@@ -132,7 +130,7 @@ async def root():
         "status": "running"
     }
 
-# ========== USER MANAGEMENT ========== 
+# ========== USERS API ========== 
 @app.post("/users/", response_model=UserResponse, status_code=status.HTTP_201_CREATED, tags=["Users"])
 def create_new_user(user: UserCreate, db: Session = Depends(get_db)):
     return create_user(db=db, user=user)
