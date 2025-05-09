@@ -1,8 +1,5 @@
 ﻿{
   "build": {
-    "env": {
-      "PIP_NO_CACHE_DIR": "off"
-    },
     "builder": "NIXPACKS",
     "buildCommand": "pip install -r requirements.txt"
   },
