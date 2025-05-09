@@ -1,50 +1,71 @@
-# Logs
-logs
+# ========================
+# 📦 GENERAL LOG FILES
+# ========================
+logs/
 *.log
 npm-debug.log*
 yarn-debug.log*
 pnpm-debug.log*
 
-# Build output
+# ========================
+# 🚀 BUILD OUTPUT
+# ========================
 dist/
 build/
 out/
 coverage/
+*.tsbuildinfo
 
-# Environment files
+# ========================
+# 🌍 ENVIRONMENT FILES
+# ========================
 .env
-.env.local
-.env.production
-.env.development
+.env.*
+!*.example
 
-# Python virtualenv & cache
+# ========================
+# 🐍 PYTHON ENV + CACHE
+# ========================
 venv/
 __pycache__/
 *.py[cod]
+*.pyo
 *.so
 
-# Node
+# ========================
+# 📦 NODE MODULES (Frontend)
+# ========================
 node_modules/
 
-# Editor
+# ========================
+# 🛠️ EDITORS & IDE FILES
+# ========================
 .vscode/
 .idea/
-
-# System
-.DS_Store
-Thumbs.db
-
-# Test videos/screenshots
-cypress/videos/
-cypress/screenshots/
-
-# Others
 *.suo
-*.ntvs*
 *.njsproj
 *.sln
 *.sw?
-*.tsbuildinfo
-venv/
-*.exe
+
+# ========================
+# 🖼️ OS-SPECIFIC FILES
+# ========================
+.DS_Store
+Thumbs.db
+
+# ========================
+# 🧪 TEST OUTPUT (Optional)
+# ========================
+cypress/videos/
+cypress/screenshots/
+
+# ========================
+# 📦 ARCHIVES & EXECUTABLES
+# ========================
 *.zip
+*.exe
+
+# ========================
+# 🧠 AI or Dev Tools (Optional)
+# ========================
+*.code-workspace
