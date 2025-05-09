@@ -1,19 +1,10 @@
 ﻿{
   "build": {
-    "builder": "NIXPACKS"
+    "env": {
+      "PIP_NO_CACHE_DIR": "off"
+    },
+    "builder": "NIXPACKS",
+    "buildCommand": "pip install -r requirements.txt"
   },
-  "nixpacks": {
-    "phases": {
-      "install": {
-        "cmds": [
-          "pip install -r requirements.txt"
-        ]
-      },
-      "start": {
-        "cmds": [
-          "uvicorn backend.main:app --host=0.0.0.0 --port=${PORT}"
-        ]
-      }
-    }
-  }
+  "start": "uvicorn backend.main:app --host=0.0.0.0 --port=${PORT}"
 }
