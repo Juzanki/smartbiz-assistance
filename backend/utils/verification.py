@@ -7,7 +7,9 @@ import string
 from typing import Optional
 
 
-def generate_verification_code(length: int = 6, seed: Optional[int] = None) -> str:
+def generate_verification_code(
+        length: int = 6,
+        seed: Optional[int] = None) -> str:
     """
     Generate a secure random numeric verification code.
 
@@ -34,7 +36,8 @@ def generate_verification_code(length: int = 6, seed: Optional[int] = None) -> s
     '482019'
     """
     if not isinstance(length, int) or length <= 0:
-        raise ValueError("❌ Verification code length must be a positive integer.")
+        raise ValueError(
+            "❌ Verification code length must be a positive integer.")
 
     if seed is not None:
         random.seed(seed)

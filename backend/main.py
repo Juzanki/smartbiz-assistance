@@ -2,36 +2,55 @@ import os
 import asyncio
 import logging
 from typing import List
+from pathlib import Path
+
 from dotenv import load_dotenv
 from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
 from sqlalchemy.orm import Session
+from pydantic import BaseModel
 from apscheduler.schedulers.background import BackgroundScheduler
 
-# ========== LOAD .env ========== 
-load_dotenv(".env")  # Local only
+# === Load Environment Variables ===
+env_path = Path(__file__).parent / ".env"
+load_dotenv(dotenv_path=env_path)
 
-# ========== DATABASE SETUP ========== 
-from backend.db import SessionLocal, engine
-from backend.models import Base
+# === Local Imports ===
+from backend.routes import (
+    register, auth_routes, logout, profile, forgot_password, pay_mpesa,
+    admin_routes, subscription, telegram_bot, broadcast, negotiation_bot,
+    voice_assistant, qr_generator, nfc_handler, qr_orders, qr_code,
+    nfc_orders, smart_orders, platforms, language, messages, inbox,
+    reply, schedule, settings_routes, orders_routes, live_stream
+)
+from backend.routes.invoice import router as invoice_router
+from backend.routes.owner_routes import owner_router
+from backend.routes.order_notification import router as order_notification_router
+from backend.routes.injection_log_routes import router as injection_log_router
+from backend.routes.ai_responder import router as ai_router
+
+from backend.middleware.language import language_middleware
+from backend.auth_routes import router as auth_router
+from backend.api.smartinject_api import router as smartinject_router
+from backend.tasks.scheduler import run_scheduled_task
+from backend.crud.user_crud import get_user_by_identifier, get_user, get_users, create_user
 from backend.schemas import UserCreate, User as UserResponse
-from backend.crud import get_user, create_user, get_users
+from backend.db import Base, SessionLocal, engine
 
-# ========== FASTAPI APP INIT ========== 
+# === FastAPI Initialization ===
 app = FastAPI(
     title="SmartBiz Assistant API",
     description="Powerful SaaS backend for automating business operations",
     version="1.0.0"
 )
 
-# ========== LOGGING ========== 
+# === Logging Setup ===
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s"
 )
 
-# ========== CORS ========== 
+# === CORS Configuration ===
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:5173"],
@@ -40,10 +59,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ========== INIT DB ========== 
+# === Database Setup ===
 Base.metadata.create_all(bind=engine)
 
-# ========== DB DEPENDENCY ========== 
 def get_db():
     db = SessionLocal()
     try:
@@ -51,12 +69,12 @@ def get_db():
     finally:
         db.close()
 
-# ========== ENV VARS ========== 
-ACCESS_TOKEN = os.getenv("ACCESS_TOKEN", "")
-PHONE_NUMBER_ID = os.getenv("PHONE_NUMBER_ID", "")
-RECIPIENT_PHONE = os.getenv("RECIPIENT_PHONE", "")
+# === Environment Check ===
+DATABASE_URL = os.getenv("DATABASE_URL")
+if not DATABASE_URL:
+    raise ValueError("❌ 'DATABASE_URL' is missing. Check your .env file inside backend/")
 
-# ========== TASK SCHEDULER ========== 
+# === Scheduler Setup ===
 scheduler = BackgroundScheduler()
 
 def send_scheduled_posts():
@@ -65,63 +83,56 @@ def send_scheduled_posts():
 scheduler.add_job(send_scheduled_posts, "interval", minutes=1)
 scheduler.start()
 
-# ========== ROUTES ========== 
-from backend.auth_routes import router as auth_router
-from backend.routes import (
-    register, auth_routes, logout, profile, forgot_password, pay_mpesa,
-    ai_responder, admin_routes, subscription, telegram_bot, broadcast,
-    negotiation_bot, voice_assistant, qr_generator, nfc_handler, qr_orders,
-    qr_code, nfc_orders, smart_orders, platforms, language, messages, inbox,
-    reply, schedule, settings_routes, orders_routes, live_stream
-)
-from backend.routes.order_notification import router as order_notification_router
-from backend.routes.owner_routes import owner_router
-from backend.routes.invoice import router as invoice_router
-from backend.middleware.language import language_middleware
-from backend.tasks.scheduler import run_scheduled_task
+# === Register All Routes ===
+routers = [
+    (auth_router, None, ["Auth"]),
+    (register.router, "/register-user", ["Register"]),
+    (auth_routes.router, "/auth", ["Auth-Routes"]),
+    (logout.router, "/logout", ["Logout"]),
+    (profile.router, None, ["Profile"]),
+    (forgot_password.router, "/forgot-password", ["Forgot-Password"]),
+    (pay_mpesa.router, None, ["Payments"]),
+    (admin_routes.router, None, ["Admin"]),
+    (ai_router, "/ai", ["AI Responder"]),
+    (subscription.router, "/subscriptions", ["Subscriptions"]),
+    (telegram_bot.router, "/telegram", ["Telegram"]),
+    (broadcast.router, "/admin", ["Broadcast"]),
+    (negotiation_bot.router, None, ["AI Negotiation"]),
+    (voice_assistant.router, "/assistant", ["Voice Assistant"]),
+    (owner_router, "/owner", ["Owner Panel"]),
+    (qr_generator.router, "/qr", ["QR"]),
+    (nfc_handler.router, "/nfc", ["NFC"]),
+    (qr_orders.router, "/orders", ["Smart Orders"]),
+    (qr_code.router, "/qr", ["QR Codes"]),
+    (nfc_orders.router, "/nfc", ["NFC Orders"]),
+    (smart_orders.router, "/smart-orders", ["Smart Orders"]),
+    (order_notification_router, None, ["Order Notification"]),
+    (platforms.router, None, ["Platforms"]),
+    (language.router, "/user", ["Language"]),
+    (messages.router, None, ["Messages"]),
+    (inbox.router, None, ["Inbox"]),
+    (reply.router, None, ["Reply"]),
+    (schedule.router, None, ["Schedule"]),
+    (settings_routes.router, None, ["Settings"]),
+    (orders_routes.router, None, ["Orders"]),
+    (live_stream.router, None, ["Live Stream"]),
+    (invoice_router, None, ["Invoice"]),
+    (smartinject_router, "/smartinject", ["SmartInject"]),
+    (injection_log_router, None, ["Injection Logs"]),
+]
 
-app.include_router(auth_router, tags=["Auth"])
-app.include_router(register.router, prefix="/register-user", tags=["Register"])
-app.include_router(auth_routes.router, prefix="/auth", tags=["Auth-Routes"])
-app.include_router(logout.router, prefix="/logout", tags=["Logout"])
-app.include_router(profile.router, tags=["Profile"])
-app.include_router(forgot_password.router, prefix="/forgot-password", tags=["Forgot-Password"])
-app.include_router(pay_mpesa.router, tags=["Payments"])
-app.include_router(admin_routes.router)
-app.include_router(ai_responder.router)
-app.include_router(subscription.router, prefix="/subscriptions", tags=["Subscriptions"])
-app.include_router(telegram_bot.router, prefix="/telegram", tags=["Telegram"])
-app.include_router(broadcast.router, prefix="/admin", tags=["Broadcast"])
-app.include_router(negotiation_bot.router, tags=["AI Negotiation"])
-app.include_router(voice_assistant.router, prefix="/assistant", tags=["Voice Assistant"])
-app.include_router(owner_router, prefix="/owner", tags=["Owner Panel"])
-app.include_router(qr_generator.router, prefix="/qr", tags=["QR"])
-app.include_router(nfc_handler.router, prefix="/nfc", tags=["NFC"])
-app.include_router(qr_orders.router, prefix="/orders", tags=["Smart Orders"])
-app.include_router(qr_code.router, prefix="/qr", tags=["QR Codes"])
-app.include_router(nfc_orders.router, prefix="/nfc", tags=["NFC"])
-app.include_router(smart_orders.router, prefix="/smart-orders", tags=["Smart Orders"])
-app.include_router(order_notification_router, tags=["Order Notification"])
-app.include_router(platforms.router)
-app.include_router(language.router, prefix="/user", tags=["Language"])
-app.include_router(messages.router)
-app.include_router(inbox.router)
-app.include_router(reply.router)
-app.include_router(schedule.router)
-app.include_router(settings_routes.router)
-app.include_router(orders_routes.router)
-app.include_router(live_stream.router)
-app.include_router(invoice_router)
+for router, prefix, tags in routers:
+    app.include_router(router, prefix=prefix or "", tags=tags)
 
-# ========== MIDDLEWARE ========== 
+# === Middlewares ===
 app.add_middleware(language_middleware)
 
-# ========== STARTUP TASK ========== 
+# === Startup Hook ===
 @app.on_event("startup")
 async def startup_event():
     asyncio.create_task(run_scheduled_task())
 
-# ========== ROOT ========== 
+# === Root Endpoint ===
 @app.get("/", tags=["Root"])
 async def root():
     return {
@@ -130,7 +141,7 @@ async def root():
         "status": "running"
     }
 
-# ========== USERS API ========== 
+# === User CRUD Endpoints ===
 @app.post("/users/", response_model=UserResponse, status_code=status.HTTP_201_CREATED, tags=["Users"])
 def create_new_user(user: UserCreate, db: Session = Depends(get_db)):
     return create_user(db=db, user=user)
@@ -146,7 +157,7 @@ def read_user(user_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="User not found")
     return db_user
 
-# ========== WHATSAPP PLACEHOLDER ========== 
+# === WhatsApp Placeholder ===
 class WhatsAppMessage(BaseModel):
     message: str
 
@@ -154,11 +165,11 @@ class WhatsAppMessage(BaseModel):
 async def send_whatsapp_message(message: WhatsAppMessage):
     return {
         "status": "queued",
-        "to": RECIPIENT_PHONE or "N/A",
+        "to": os.getenv("RECIPIENT_PHONE", "N/A"),
         "message": message.message
     }
 
-# ========== LOCAL RUNNER ========== 
+# === Run Server (Only for Local Dev) ===
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("backend.main:app", host="0.0.0.0", port=8000, reload=True)

@@ -1,5 +1,6 @@
 import os
 
+
 def send_sms_message(phone: str, message: str):
     """
     Sends SMS message via mock service or SMS API (Africa's Talking, Twilio).

@@ -27,6 +27,7 @@ translations = {
     }
 }
 
+
 def translate(key: str, lang: str = "en") -> str:
     """
     Retrieve a translated string by key and language.

@@ -7,11 +7,12 @@ from fastapi import Depends, HTTPException, status
 from backend.auth import get_current_user
 from backend.models import User
 
+
 def require_plan(allowed_plans: list):
     """
     Dependency that checks if the current user has a valid subscription plan.
     Raises HTTP 403 if user's plan is not allowed.
-    
+
     Args:
         allowed_plans (list): List of accepted plan names (e.g., ["Pro", "Business"])
 
@@ -27,13 +28,13 @@ def require_plan(allowed_plans: list):
         return user
 
     return checker
-    
+
+
 def require_plan(required_plans: list[str]):
     def _check_subscription(current_user: User = Depends(get_current_user)):
         if current_user.subscription_status not in required_plans:
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
-                detail=f"🔒 Feature allowed only for: {', '.join(required_plans)} plan users."
-            )
+                detail=f"🔒 Feature allowed only for: {', '.join(required_plans)} plan users.")
         return current_user
     return _check_subscription

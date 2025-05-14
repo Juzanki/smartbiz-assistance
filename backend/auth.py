@@ -16,7 +16,7 @@ from dotenv import load_dotenv
 from backend.models import User  # ✅ Corrected: Use from models, not schemas
 from backend.db import SessionLocal
 from backend.routes.logout import verify_not_blacklisted
-from backend.crud import get_user_by_email, get_user_by_username, get_user_by_phone
+from backend.crud.user_crud import get_user_by_email, get_user_by_username, get_user_by_phone
 from backend.utils.security import (
     verify_password,
     SECRET_KEY,
@@ -25,12 +25,17 @@ from backend.utils.security import (
 
 # ========== Load Environment ==========
 load_dotenv()
-ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "60"))  # string default
+ACCESS_TOKEN_EXPIRE_MINUTES = int(
+    os.getenv(
+        "ACCESS_TOKEN_EXPIRE_MINUTES",
+        "60"))  # string default
 
 # ========== OAuth2 Scheme ==========
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
 # ========== Database Session ==========
+
+
 def get_db() -> Generator:
     """Yield a SQLAlchemy database session."""
     db = SessionLocal()
@@ -40,6 +45,8 @@ def get_db() -> Generator:
         db.close()
 
 # ========== Authenticate User ==========
+
+
 def authenticate_user(db: Session, identifier: str, password: str):
     """Authenticate user using email, username, or phone number."""
     user = (
@@ -52,6 +59,8 @@ def authenticate_user(db: Session, identifier: str, password: str):
     return user
 
 # ========== Create Access Token ==========
+
+
 def create_access_token(data: dict, expires_delta: timedelta = None):
     """Generate a JWT access token."""
     to_encode = data.copy()
@@ -61,6 +70,8 @@ def create_access_token(data: dict, expires_delta: timedelta = None):
     return encoded_jwt
 
 # ========== Get Current User ==========
+
+
 def get_current_user(
     token: str = Depends(verify_not_blacklisted),
     db: Session = Depends(get_db)
@@ -87,6 +98,8 @@ def get_current_user(
     return user
 
 # ========== Check Subscription Status ==========
+
+
 def check_subscription_status(required_status: list[str]):
     """Ensure the user has the required subscription level."""
     def _check(current_user: User = Depends(get_current_user)):
@@ -97,4 +110,3 @@ def check_subscription_status(required_status: list[str]):
             )
         return current_user
     return _check
-

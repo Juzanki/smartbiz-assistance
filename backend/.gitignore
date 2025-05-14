@@ -1,0 +1,71 @@
+# 🔐 Mafaili ya mazingira ya siri
+.env
+.env.production
+.env.local
+*.env
+
+# 🧠 Cache ya Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# 🛠️ Editor na system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# 📦 Mafaili ya package management
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# 💻 Logs na Debug files
+*.log
+logs/
+*.sqlite3
+
+# 📜 SQLite fallback (ikiwa umetumia wakati wa development)
+*.db
+
+# 📦 Virtual environment (venv)
+venv/
+.venv/
+ENV/
+env/
+python_env/
+
+# 🧪 Testing artifacts
+htmlcov/
+.coverage
+.cache/
+.pytest_cache/
+
+# 🧪 Coverage reports
+coverage.xml
+nosetests.xml
+test-results/
+
+# 📦 Compiled assets (kama unatumia frontend ndani ya backend)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 🐳 Docker
+*.pid
+docker-compose.override.yml
+
+# 🧾 Misc
+*.bak
+*.swp
+*.tmp
+*.old
+
+# 🔒 GitHub backup files
+*.orig
+
+# ⚠️ Auto-generated configs
+.settings/
+*.code-workspace

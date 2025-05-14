@@ -1,6 +1,6 @@
 """
 Routes for managing user profile operations in SmartBiz Assistant.
-Includes get, update, and delete functionalities for authenticated users.
+Includes get, update, delete, and fanbase stats.
 """
 
 from fastapi import APIRouter, Depends, HTTPException, status
@@ -8,58 +8,58 @@ from sqlalchemy.orm import Session
 
 from backend.db import get_db
 from backend.auth import get_current_user
-from backend.schemas import UserUpdate, User
-from backend.models import User as UserModel  # ✅ Rename User model to UserModel
+from backend.schemas import UserUpdate, User as UserSchema
+from backend.models import User as UserModel
 
-router = APIRouter()
+router = APIRouter(prefix="/profile", tags=["User Profile"])
+
 
 # ==================== GET CURRENT PROFILE ====================
-@router.get("/me", response_model=User, summary="Get current user profile")
+@router.get("/me", response_model=UserSchema, summary="🙋 Get current user profile with stats")
 def read_current_user(
     current_user: UserModel = Depends(get_current_user)
 ):
     """
-    Retrieve the currently authenticated user's profile details.
+    Retrieve the currently authenticated user's full profile,
+    including follower stats, language, and linked business.
     """
     return current_user
 
+
 # ==================== UPDATE CURRENT PROFILE ====================
-@router.put("/me", response_model=User, summary="Update current user profile")
+@router.put("/me", response_model=UserSchema, summary="✏️ Update current user profile")
 def update_current_user(
     update_data: UserUpdate,
     db: Session = Depends(get_db),
     current_user: UserModel = Depends(get_current_user)
 ):
     """
-    Update the current authenticated user's profile fields.
+    Update the current authenticated user's profile fields:
+    full name, business info, language, telegram ID, etc.
     """
-    # Merge session if detached
     persistent_user = db.merge(current_user)
 
-    # Only update fields provided
-    if update_data.full_name is not None:
-        persistent_user.full_name = update_data.full_name
-    if update_data.business_name is not None:
-        persistent_user.business_name = update_data.business_name
-    if update_data.business_type is not None:
-        persistent_user.business_type = update_data.business_type
-    if update_data.language is not None:
-        persistent_user.language = update_data.language
-    if update_data.telegram_id is not None:
-        persistent_user.telegram_id = update_data.telegram_id
+    for attr in [
+        "full_name", "business_name", "business_type",
+        "language", "telegram_id"
+    ]:
+        value = getattr(update_data, attr, None)
+        if value is not None:
+            setattr(persistent_user, attr, value)
 
     db.commit()
     db.refresh(persistent_user)
     return persistent_user
 
+
 # ==================== DELETE CURRENT PROFILE ====================
-@router.delete("/me", status_code=status.HTTP_204_NO_CONTENT, summary="Delete current user profile")
+@router.delete("/me", status_code=status.HTTP_204_NO_CONTENT, summary="🗑️ Delete current user profile")
 def delete_current_user(
     db: Session = Depends(get_db),
     current_user: UserModel = Depends(get_current_user)
 ):
     """
-    Delete the current authenticated user's profile completely.
+    Delete the current authenticated user's account completely from the system.
     """
     persistent_user = db.merge(current_user)
 
@@ -71,4 +71,4 @@ def delete_current_user(
 
     db.delete(persistent_user)
     db.commit()
-    return {"detail": "User deleted successfully"}
+    return  # No return body for 204

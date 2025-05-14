@@ -12,6 +12,8 @@ TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 BASE_URL = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}"
 
 # ==================== HELPER: Send Message ====================
+
+
 async def send_telegram_message(chat_id: str, message: str) -> dict:
     url = f"{BASE_URL}/sendMessage"
     payload = {
@@ -24,7 +26,12 @@ async def send_telegram_message(chat_id: str, message: str) -> dict:
         return response.json()
 
 # (Optional) HELPER: Send Message with Buttons
-async def send_message_with_buttons(chat_id: str, message: str, buttons: list) -> dict:
+
+
+async def send_message_with_buttons(
+        chat_id: str,
+        message: str,
+        buttons: list) -> dict:
     url = f"{BASE_URL}/sendMessage"
     payload = {
         "chat_id": chat_id,
@@ -38,6 +45,8 @@ async def send_message_with_buttons(chat_id: str, message: str, buttons: list) -
         return response.json()
 
 # ==================== TELEGRAM WEBHOOK ====================
+
+
 @router.post("/telegram/webhook", summary="🎯 Telegram Bot Webhook")
 async def telegram_webhook(request: Request, db: Session = Depends(get_db)):
     data = await request.json()
@@ -69,5 +78,3 @@ async def telegram_webhook(request: Request, db: Session = Depends(get_db)):
 
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Webhook error: {str(e)}")
-
-

@@ -1,13 +1,12 @@
 # backend/routes/nfc_orders.py
 
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, HTTPException, Query, Depends
+from sqlalchemy.orm import Session
 from backend.models import Product
 from backend.db import get_db
-from sqlalchemy.orm import Session
-from fastapi import Depends
-
 
 router = APIRouter()
+
 
 @router.get("/nfc/product-info", summary="Fetch product by NFC tag")
 def get_product_by_nfc(
@@ -27,5 +26,5 @@ def get_product_by_nfc(
         "name": product.name,
         "description": product.description,
         "price": product.price,
-        "stock": product.stock,
+        "stock": product.stock
     }

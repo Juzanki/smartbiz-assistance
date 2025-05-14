@@ -22,6 +22,8 @@ logging.basicConfig(
 )
 
 # ===================== COMMAND: /start =====================
+
+
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         "👋 Karibu SmartBiz Assistant Bot!\n\n"
@@ -29,6 +31,8 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
 # ===================== MESSAGE HANDLER =====================
+
+
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_message = update.message.text
 
@@ -49,11 +53,15 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 # ===================== MAIN =====================
 if __name__ == '__main__':
     if not TELEGRAM_TOKEN or not OPENAI_API_KEY:
-        raise ValueError("❌ TELEGRAM_TOKEN au OPENAI_API_KEY haijawekwa kwenye .env file!")
+        raise ValueError(
+            "❌ TELEGRAM_TOKEN au OPENAI_API_KEY haijawekwa kwenye .env file!")
 
     print("✅ SmartBiz Bot inafanya kazi...")
 
     app = ApplicationBuilder().token(TELEGRAM_TOKEN).build()
     app.add_handler(CommandHandler("start", start))
-    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
+    app.add_handler(
+        MessageHandler(
+            filters.TEXT & ~filters.COMMAND,
+            handle_message))
     app.run_polling()

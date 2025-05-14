@@ -1,81 +1,78 @@
-"""
-AI Auto Responder Endpoint for SmartBiz Assistant.
-
-Handles AI-powered responses using OpenAI API.
-Access is restricted to users with 'Pro' or 'Business' subscription plans.
-"""
+# backend/routes/ai_responder.py
 
 import os
-import logging
-from dotenv import load_dotenv
 import openai
-from fastapi import APIRouter, Depends, HTTPException, status
+import httpx
+from dotenv import load_dotenv
+from fastapi import APIRouter, HTTPException, Depends, status
 from pydantic import BaseModel
-
 from backend.auth import get_current_user
 from backend.models import User
-from backend.utils.access_control import require_plan
 
-# ========== Setup ==========
 load_dotenv()
-openai.api_key = os.getenv("OPENAI_API_KEY")
 
-# Logger setup
-logger = logging.getLogger(__name__)
+router = APIRouter(prefix="/ai", tags=["AI Assistant"])
 
-router = APIRouter()
+# Load API Keys
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-3.5-turbo")
+DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY")
+HUGGINGFACE_API_TOKEN = os.getenv("HUGGINGFACE_API_TOKEN")
 
-# ========== Request Schema ==========
-class PromptRequest(BaseModel):
+openai.api_key = OPENAI_API_KEY
+
+
+class AIRequest(BaseModel):
     prompt: str
 
-# ========== AI Responder Endpoint ==========
-@router.post(
-    "/ai/respond",
-    summary="Respond to user prompt using OpenAI",
-    dependencies=[Depends(require_plan(["Pro", "Business"]))],
-)
-def auto_reply_bot(
-    request: PromptRequest,
-    current_user: User = Depends(get_current_user)
-):
-    """
-    Generate AI response based on user prompt.
-    Only accessible to Pro or Business subscribers.
-    """
+
+@router.post("/respond", summary="🤖 Smart AI Responder")
+async def ai_respond(request: AIRequest, current_user: User = Depends(get_current_user)):
     prompt = request.prompt.strip()
-
     if not prompt:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Prompt cannot be empty"
-        )
+        raise HTTPException(status_code=400, detail="Prompt is required")
 
-    try:
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=[{"role": "user", "content": prompt}]
-        )
-        answer = response.choices[0].message.content.strip()
+    # 1. Try OpenAI
+    if OPENAI_API_KEY:
+        try:
+            response = openai.ChatCompletion.create(
+                model=OPENAI_MODEL,
+                messages=[{"role": "user", "content": prompt}],
+                max_tokens=500
+            )
+            return {"source": "openai", "response": response.choices[0].message.content.strip()}
+        except Exception as e:
+            print("⚠️ OpenAI failed:", str(e))
 
-        return {
-            "user": current_user.email,
-            "plan": current_user.subscription_status,
-            "prompt": prompt,
-            "response": answer
-        }
+    # 2. Try DeepSeek
+    if DEEPSEEK_API_KEY:
+        try:
+            headers = {
+                "Authorization": f"Bearer {DEEPSEEK_API_KEY}",
+                "Content-Type": "application/json"
+            }
+            payload = {
+                "model": "deepseek-chat",
+                "messages": [{"role": "user", "content": prompt}],
+            }
+            async with httpx.AsyncClient() as client:
+                resp = await client.post("https://api.deepseek.com/v1/chat/completions", json=payload, headers=headers)
+                result = resp.json()
+                return {"source": "deepseek", "response": result["choices"][0]["message"]["content"].strip()}
+        except Exception as e:
+            print("⚠️ DeepSeek failed:", str(e))
 
-    except Exception as exc:
-        logger.exception("❌ OpenAI Error: %s", str(exc))
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="OpenAI API Error. Please check your API key and request format."
-        ) from exc
+    # 3. Try HuggingFace
+    if HUGGINGFACE_API_TOKEN:
+        try:
+            headers = {"Authorization": f"Bearer {HUGGINGFACE_API_TOKEN}"}
+            data = {"inputs": prompt}
+            async with httpx.AsyncClient() as client:
+                resp = await client.post("https://api-inference.huggingface.co/models/google/flan-t5-large", json=data, headers=headers)
+                result = resp.json()
+                return {"source": "huggingface", "response": result[0]["generated_text"].strip()}
+        except Exception as e:
+            print("⚠️ HuggingFace failed:", str(e))
 
-# ========== Pro Chatbot Access Test ==========
-@router.get("/pro-chatbot", summary="🤖 AI Auto-Responder (Pro/Business only)")
-def use_pro_feature(current_user: User = Depends(require_plan(["Pro", "Business"]))):
-    return {
-        "message": f"✅ Welcome {current_user.full_name}, you are accessing Pro features.",
-        "feature": "AI Auto-Responder for Business"
-    }
+    # 4. All failed
+    raise HTTPException(status_code=500, detail="All AI services failed or not configured.")

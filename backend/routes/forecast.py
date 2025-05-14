@@ -1,13 +1,13 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from backend.db import get_db
 from backend.env_ai import get_weather_by_location
 from backend.models import Product
 from datetime import datetime
 
-router = APIRouter()
+router = APIRouter(prefix="/forecast", tags=["Forecast & Recommendations"])
 
-# Cities to track (can be dynamic later)
+# Predefined cities (can be moved to DB or settings)
 CITIES = [
     {"city": "Dar es Salaam", "lat": -6.8, "lng": 39.28},
     {"city": "Dodoma", "lat": -6.2, "lng": 35.75},
@@ -16,26 +16,38 @@ CITIES = [
     {"city": "Mbeya", "lat": -8.9, "lng": 33.45}
 ]
 
-@router.get("/forecast/zones")
+
+@router.get("/zones", summary="🌦️ Get forecast and product recommendations")
 def forecast_zones(db: Session = Depends(get_db)):
     now = datetime.now().strftime("%H:%M")
     result = []
 
     for city in CITIES:
-        weather_data = get_weather_by_location(city["city"])
-        weather = "sunny" if weather_data["weather"] in ["clear"] else (
-            "rainy" if "rain" in weather_data["weather"] else "cloudy"
-        )
+        try:
+            weather_data = get_weather_by_location(city["city"])
+            raw_weather = weather_data.get("weather", "").lower()
 
-        # Get sample product recommendation
-        products = db.query(Product).filter(
-            Product.weather_type == weather,
-            Product.preferred_location.ilike(f"%{city['city']}%"),
-            Product.preferred_time_start <= now,
-            Product.preferred_time_end >= now
-        ).limit(2).all()
+            # Basic weather classification
+            if "clear" in raw_weather:
+                weather = "sunny"
+            elif "rain" in raw_weather:
+                weather = "rainy"
+            else:
+                weather = "cloudy"
 
-        recommendation = ", ".join([p.name for p in products]) or "None"
+            # Get matching products
+            products = db.query(Product).filter(
+                Product.weather_type == weather,
+                Product.preferred_location.ilike(f"%{city['city']}%"),
+                Product.preferred_time_start <= now,
+                Product.preferred_time_end >= now
+            ).limit(2).all()
+
+            recommendation = ", ".join([p.name for p in products]) or "None"
+
+        except Exception as e:
+            weather = "unknown"
+            recommendation = "None"
 
         result.append({
             "city": city["city"],

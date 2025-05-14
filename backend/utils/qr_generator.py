@@ -1,5 +1,8 @@
+# backend/utils/qr_generator.py
 import qrcode
 import os
+from pathlib import Path
+
 
 def generate_product_qr(data: str, filename: str = "product_qr.png") -> str:
     qr = qrcode.make(data)

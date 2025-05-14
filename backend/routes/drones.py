@@ -2,13 +2,20 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from backend.db import get_db
 from backend.models import DroneMission, Product
-from typing import List
+from typing import List, Optional
 
-router = APIRouter()
+router = APIRouter(prefix="/drones", tags=["Drone Missions"])
 
-@router.get("/drones/missions")
+
+@router.get("/missions", summary="🚁 Get active drone missions", response_model=List[dict])
 def get_active_drone_missions(db: Session = Depends(get_db)):
-    missions = db.query(DroneMission).filter(DroneMission.status == "in-transit").all()
+    """
+    Returns a list of active drone missions with related product info.
+    """
+    missions = db.query(DroneMission).filter(
+        DroneMission.status == "in-transit"
+    ).all()
+
     output = []
 
     for m in missions:

@@ -4,6 +4,7 @@ import os
 WHATSAPP_TOKEN = os.getenv("WHATSAPP_TOKEN")
 WHATSAPP_PHONE_ID = os.getenv("WHATSAPP_PHONE_ID")
 
+
 def send_whatsapp_message(phone: str, message: str):
     """
     Sends a WhatsApp message using Meta Cloud API (or mock).

@@ -1,12 +1,23 @@
 from fastapi import APIRouter, UploadFile, File, Depends, HTTPException
-from backend.utils.audio_utils import extract_audio_from_video, transcribe_audio, generate_voice_response
+from backend.utils.audio_utils import (
+    extract_audio_from_video,
+    transcribe_audio,
+    generate_voice_response
+)
 import uuid
 import os
+import shutil
 
-router = APIRouter()
+router = APIRouter(prefix="/assistant", tags=["Voice Assistant"])
 
-@router.post("/voice-assistant", summary="Send voice/video and get product info")
+
+@router.post("/voice", summary="🎙️ Ask via voice or video, get spoken response")
 async def voice_shopping_assistant(file: UploadFile = File(...)):
+    """
+    Accepts voice or video file, converts it to text,
+    answers the query using SmartBiz, and returns audio response.
+    """
+
     temp_dir = "temp_audio"
     os.makedirs(temp_dir, exist_ok=True)
 
@@ -14,18 +25,21 @@ async def voice_shopping_assistant(file: UploadFile = File(...)):
     input_path = os.path.join(temp_dir, f"{file_id}_{file.filename}")
     output_path = os.path.join(temp_dir, f"{file_id}.wav")
 
-    # Save file temporarily
-    with open(input_path, "wb") as f:
-        f.write(await file.read())
+    # Save input file
+    try:
+        with open(input_path, "wb") as f:
+            f.write(await file.read())
+    except Exception:
+        raise HTTPException(status_code=400, detail="Failed to upload file")
 
     try:
-        # 1. Extract audio from video (if video)
+        # 1. Extract audio (if needed)
         await extract_audio_from_video(input_path, output_path)
 
-        # 2. Transcribe audio to text
+        # 2. Transcribe to text
         transcript = await transcribe_audio(output_path)
 
-        # 3. Process transcript as product question
+        # 3. Generate voice reply text
         response_text = f"Umeuliza kuhusu: {transcript}. Hii bidhaa inapatikana kwenye stock yetu."
 
         # 4. Convert response to voice
@@ -33,8 +47,16 @@ async def voice_shopping_assistant(file: UploadFile = File(...)):
 
         return {
             "message": response_text,
+            "transcript": transcript,
             "voice_reply_url": f"/static/responses/{file_id}.mp3"
         }
 
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=f"Voice Assistant Error: {str(e)}")
+
+    finally:
+        # Clean up temporary files
+        if os.path.exists(input_path):
+            os.remove(input_path)
+        if os.path.exists(output_path):
+            os.remove(output_path)

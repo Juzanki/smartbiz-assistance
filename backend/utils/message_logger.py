@@ -4,7 +4,11 @@ from sqlalchemy.orm import Session
 from backend.models import MessageLog
 
 
-def log_telegram_message(db: Session, chat_id: str, sender_name: str, message: str):
+def log_telegram_message(
+        db: Session,
+        chat_id: str,
+        sender_name: str,
+        message: str):
     """
     Save incoming Telegram message to database.
     """

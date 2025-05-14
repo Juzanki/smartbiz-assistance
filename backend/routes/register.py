@@ -1,14 +1,14 @@
 """
 Route to handle business user registration in SmartBiz Assistant.
-Ensures unique phone and Telegram ID before saving new user entry.
+Ensures unique phone, username, email, and Telegram ID.
 """
 
 from uuid import uuid4
 from datetime import datetime
 from typing import Optional
 
-from fastapi import APIRouter, HTTPException, Depends
-from pydantic import BaseModel
+from fastapi import APIRouter, HTTPException, Depends, status
+from pydantic import BaseModel, EmailStr
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
@@ -16,12 +16,13 @@ from backend.db import get_db
 from backend.models import User
 from backend.utils.security import get_password_hash
 
-router = APIRouter()
+router = APIRouter(prefix="/auth", tags=["Authentication"])
 
+
+# ========== Schemas ==========
 class RegisterRequest(BaseModel):
-    """Schema for user registration input."""
     username: str
-    email: str
+    email: EmailStr
     password: str
     phone_number: str
     full_name: Optional[str] = "Guest"
@@ -32,27 +33,36 @@ class RegisterRequest(BaseModel):
 
 
 class RegisterResponse(BaseModel):
-    """Schema for response after registration."""
     user_token: str
     message: str
 
 
-@router.post("/register-user", response_model=RegisterResponse, summary="Register a new user")
+# ========== Endpoint ==========
+@router.post("/register-user", response_model=RegisterResponse, summary="📝 Register a new business user")
 def register_user(data: RegisterRequest, db: Session = Depends(get_db)):
     """
-    Register a new business user with unique phone number and Telegram ID.
+    Register a new SmartBiz business user. Validates uniqueness of:
+    - Phone number
+    - Telegram ID (optional)
+    - Email
+    - Username
     """
-    if data.telegram_id:
-        existing = db.query(User).filter_by(telegram_id=data.telegram_id).first()
-        if existing:
-            raise HTTPException(status_code=400, detail="User already registered.")
 
-    existing_phone = db.query(User).filter_by(phone_number=data.phone_number).first()
-    if existing_phone:
+    # Validate uniqueness
+    if db.query(User).filter_by(username=data.username).first():
+        raise HTTPException(status_code=400, detail="Username already exists.")
+    if db.query(User).filter_by(email=data.email).first():
+        raise HTTPException(status_code=400, detail="Email already registered.")
+    if db.query(User).filter_by(phone_number=data.phone_number).first():
         raise HTTPException(status_code=400, detail="Phone number already registered.")
+    if data.telegram_id:
+        if db.query(User).filter_by(telegram_id=data.telegram_id).first():
+            raise HTTPException(status_code=400, detail="Telegram ID already registered.")
 
+    # Generate user token
     token = str(uuid4())
 
+    # Create user
     new_user = User(
         username=data.username,
         email=data.email,
@@ -75,11 +85,11 @@ def register_user(data: RegisterRequest, db: Session = Depends(get_db)):
         db.refresh(new_user)
         return RegisterResponse(
             user_token=token,
-            message="Business registered successfully."
+            message="✅ Business registered successfully."
         )
     except IntegrityError as exc:
         db.rollback()
         raise HTTPException(
             status_code=500,
-            detail="Registration failed due to server error."
+            detail="Registration failed due to internal error."
         ) from exc

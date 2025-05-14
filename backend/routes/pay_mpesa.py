@@ -13,7 +13,7 @@ from backend.db import get_db
 from backend.models import Payment, User
 from backend.schemas import PaymentRequest, PaymentResponse, ConfirmMpesaRequest
 from backend.auth import get_current_user
-from backend.dependencies import check_admin  # hakikisha una hii dependency ya ku-check kama user ni admin
+from backend.dependencies import check_admin
 
 router = APIRouter()
 
@@ -22,19 +22,13 @@ PAYBILL_NUMBER = "5261077"
 ACCOUNT_NAME = "Ukumbi wa Mjasiriamali"
 
 
-@router.post(
-    "/pay-mpesa",
-    response_model=PaymentResponse,
-    summary="Initiate M-PESA payment"
-)
+@router.post("/pay-mpesa", response_model=PaymentResponse, summary="Initiate M-PESA payment")
 def initiate_mpesa_payment(
     payload: PaymentRequest,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ) -> PaymentResponse:
-    """
-    Create a pending payment record and return M-PESA instructions.
-    """
+    """Create a pending payment record and return M-PESA instructions."""
     if payload.amount <= 0:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -75,18 +69,12 @@ def initiate_mpesa_payment(
     )
 
 
-@router.post(
-    "/confirm-mpesa",
-    response_model=PaymentResponse,
-    summary="✅ Confirm M-PESA payment manually"
-)
+@router.post("/confirm-mpesa", response_model=PaymentResponse, summary="✅ Confirm M-PESA payment manually")
 def confirm_mpesa_payment(
     payload: ConfirmMpesaRequest,
     db: Session = Depends(get_db)
 ) -> PaymentResponse:
-    """
-    Manually confirm a pending M-PESA payment by reference code.
-    """
+    """Manually confirm a pending M-PESA payment by reference code."""
     payment = db.query(Payment).filter(Payment.reference == payload.reference).first()
 
     if not payment:
@@ -119,6 +107,7 @@ def confirm_mpesa_payment(
         instructions="✅ M-PESA payment confirmed manually."
     )
 
+
 @router.get("/my-payments", summary="Get my payment history")
 def get_my_payments(
     db: Session = Depends(get_db),
@@ -143,7 +132,7 @@ def get_my_payments(
 @router.get("/admin/payments", summary="Admin - View all payments")
 def get_all_payments_for_admin(
     db: Session = Depends(get_db),
-    current_user: User = Depends(check_admin)  # 👈 Only admin can access
+    current_user: User = Depends(check_admin)
 ):
     payments = db.query(Payment).order_by(Payment.created_at.desc()).all()
 
