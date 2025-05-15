@@ -23,4 +23,5 @@ services:
           name: smartbiz-db
           property: password
       - key: SECRET_KEY
-        value: pK179z2QQzIYt9e4l5C0e7kvdIX6p4y9d7_AQIHTcu_hh35U40ds9uT8eKT5gj5tunErk1byXqUz5O5ysh6cQ
+        value: pX1979z2OQzI1yTge41...y5h6cQ
+
