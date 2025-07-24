@@ -1,67 +1,89 @@
-import os
-import asyncio
-import logging
-from typing import List
-from pathlib import Path
+# === 🌟 SmartBiz Assistance Backend Entrypoint (main.py) ===
+# 🚀 Built with FastAPI + SQLAlchemy + .env + WebSockets + Background Jobs
+# =======================================================================
 
-from dotenv import load_dotenv
+import os
+import logging
+from pathlib import Path
+from typing import List
+
 from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from sqlalchemy.orm import Session
-from pydantic import BaseModel
+from dotenv import load_dotenv
 from apscheduler.schedulers.background import BackgroundScheduler
+from pydantic import BaseModel
 
-# === Load Environment Variables ===
-env_path = Path(__file__).parent / ".env"
-load_dotenv(dotenv_path=env_path)
+# === 🌍 Load Environment Variables ===
+BASE_DIR = Path(__file__).resolve().parent
+load_dotenv(BASE_DIR / ".env")
 
-# === Local Imports ===
+# === 🛠️ Local Modules ===
+from backend.db import Base, SessionLocal, engine
+from backend.middleware.language import language_middleware
+from backend.background import start_background_tasks
+from backend.tasks.scheduler import start_schedulers
+from backend.websocket import ws_routes, live_ws
+from backend.crud.user_crud import get_user_by_identifier, get_user, get_users, create_user
+from backend.schemas.user import UserCreate, UserOut as UserResponse
+
+# === 🔁 Core & Extended Routes ===
 from backend.routes import (
-    register, auth_routes, logout, profile, forgot_password, pay_mpesa,
+    register, logout, profile, forgot_password, pay_mpesa, pay_pesapal,
     admin_routes, subscription, telegram_bot, broadcast, negotiation_bot,
     voice_assistant, qr_generator, nfc_handler, qr_orders, qr_code,
     nfc_orders, smart_orders, platforms, language, messages, inbox,
-    reply, schedule, settings_routes, orders_routes, live_stream
+    reply, schedule, settings_routes, orders_routes, live_stream,
+    campaigns_routes, likes, chat, superchat, announcement,
+    guests, fans, filters, viewers, smart_reply, products_live,
+    moderation, explore, share_activity, host_routes, co_host_routes,
+    co_host_invite_routes, gift_fly, replay_gift_timeline, gift_marker,
+    replay_analytics, replay_caption, replay_title, replay_summary,
+    live_viewer, replay_event_routes, replay_analytics_routes,
+    gift_movement_routes, top_contributor_routes, leaderboard_routes,
+    leaderboard_notification_routes
 )
+
 from backend.routes.invoice import router as invoice_router
 from backend.routes.owner_routes import owner_router
 from backend.routes.order_notification import router as order_notification_router
 from backend.routes.injection_log_routes import router as injection_log_router
 from backend.routes.ai_responder import router as ai_router
+from backend.routes.auth_routes import router as auth_router
 
-from backend.middleware.language import language_middleware
-from backend.auth_routes import router as auth_router
-from backend.api.smartinject_api import router as smartinject_router
-from backend.tasks.scheduler import run_scheduled_task
-from backend.crud.user_crud import get_user_by_identifier, get_user, get_users, create_user
-from backend.schemas import UserCreate, User as UserResponse
-from backend.db import Base, SessionLocal, engine
-
-# === FastAPI Initialization ===
+# === 🚀 FastAPI App Initialization ===
 app = FastAPI(
-    title="SmartBiz Assistant API",
+    title="SmartBiz Assistance API",
     description="Powerful SaaS backend for automating business operations",
     version="1.0.0"
 )
 
-# === Logging Setup ===
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s"
-)
+# === 🌐 CORS Configuration ===
+origins = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    os.getenv("VITE_API_URL", ""),
+    os.getenv("VITE_NGROK_URL", ""),
+]
 
-# === CORS Configuration ===
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=[origin for origin in origins if origin],
+    allow_origin_regex=r"https://.*\.ngrok-free\.app|https://.*\.trycloudflare\.com",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# === Database Setup ===
+# === 🗂️ Static & Middleware ===
+app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
+app.add_middleware(language_middleware)
+
+# === 🧠 Database Initialization ===
 Base.metadata.create_all(bind=engine)
 
+# === 🧪 Dependency for DB Session ===
 def get_db():
     db = SessionLocal()
     try:
@@ -69,79 +91,36 @@ def get_db():
     finally:
         db.close()
 
-# === Environment Check ===
+# === ✅ Sanity Check for DATABASE_URL ===
 DATABASE_URL = os.getenv("DATABASE_URL")
 if not DATABASE_URL:
-    raise ValueError("❌ 'DATABASE_URL' is missing. Check your .env file inside backend/")
+    raise RuntimeError("❌ DATABASE_URL is missing. Please check your .env file.")
 
-# === Scheduler Setup ===
-scheduler = BackgroundScheduler()
+# === 📜 Logging Configuration ===
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s | %(levelname)s | %(message)s",
+)
 
-def send_scheduled_posts():
-    logging.info("✅ Scheduled posts sent")
+# === ⏱️ Startup Background Jobs ===
+start_background_tasks()
+start_schedulers()
 
-scheduler.add_job(send_scheduled_posts, "interval", minutes=1)
-scheduler.start()
+# === 📡 Include All Routers ===
+app.include_router(auth_router, prefix="/auth", tags=["Auth"])
 
-# === Register All Routes ===
-routers = [
-    (auth_router, None, ["Auth"]),
+# 🧩 Essential Core Routes
+core_routes = [
     (register.router, "/register-user", ["Register"]),
-    (auth_routes.router, "/auth", ["Auth-Routes"]),
     (logout.router, "/logout", ["Logout"]),
     (profile.router, None, ["Profile"]),
-    (forgot_password.router, "/forgot-password", ["Forgot-Password"]),
-    (pay_mpesa.router, None, ["Payments"]),
-    (admin_routes.router, None, ["Admin"]),
-    (ai_router, "/ai", ["AI Responder"]),
-    (subscription.router, "/subscriptions", ["Subscriptions"]),
-    (telegram_bot.router, "/telegram", ["Telegram"]),
-    (broadcast.router, "/admin", ["Broadcast"]),
-    (negotiation_bot.router, None, ["AI Negotiation"]),
-    (voice_assistant.router, "/assistant", ["Voice Assistant"]),
-    (owner_router, "/owner", ["Owner Panel"]),
-    (qr_generator.router, "/qr", ["QR"]),
-    (nfc_handler.router, "/nfc", ["NFC"]),
-    (qr_orders.router, "/orders", ["Smart Orders"]),
-    (qr_code.router, "/qr", ["QR Codes"]),
-    (nfc_orders.router, "/nfc", ["NFC Orders"]),
-    (smart_orders.router, "/smart-orders", ["Smart Orders"]),
-    (order_notification_router, None, ["Order Notification"]),
-    (platforms.router, None, ["Platforms"]),
-    (language.router, "/user", ["Language"]),
-    (messages.router, None, ["Messages"]),
-    (inbox.router, None, ["Inbox"]),
-    (reply.router, None, ["Reply"]),
-    (schedule.router, None, ["Schedule"]),
-    (settings_routes.router, None, ["Settings"]),
-    (orders_routes.router, None, ["Orders"]),
-    (live_stream.router, None, ["Live Stream"]),
-    (invoice_router, None, ["Invoice"]),
-    (smartinject_router, "/smartinject", ["SmartInject"]),
-    (injection_log_router, None, ["Injection Logs"]),
+    (ws_routes.router, None, ["WebSocket"]),
 ]
 
-for router, prefix, tags in routers:
+for router, prefix, tags in core_routes:
     app.include_router(router, prefix=prefix or "", tags=tags)
 
-# === Middlewares ===
-app.add_middleware(language_middleware)
-
-# === Startup Hook ===
-@app.on_event("startup")
-async def startup_event():
-    asyncio.create_task(run_scheduled_task())
-
-# === Root Endpoint ===
-@app.get("/", tags=["Root"])
-async def root():
-    return {
-        "message": "✅ Welcome to SmartBiz Assistant API",
-        "docs": "/docs",
-        "status": "running"
-    }
-
-# === User CRUD Endpoints ===
+# === 👤 User Management Endpoints ===
 @app.post("/users/", response_model=UserResponse, status_code=status.HTTP_201_CREATED, tags=["Users"])
 def create_new_user(user: UserCreate, db: Session = Depends(get_db)):
     return create_user(db=db, user=user)
@@ -153,11 +132,11 @@ def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
 @app.get("/users/{user_id}", response_model=UserResponse, tags=["Users"])
 def read_user(user_id: int, db: Session = Depends(get_db)):
     db_user = get_user(db, user_id=user_id)
-    if db_user is None:
+    if not db_user:
         raise HTTPException(status_code=404, detail="User not found")
     return db_user
 
-# === WhatsApp Placeholder ===
+# === 💬 WhatsApp Sample Message ===
 class WhatsAppMessage(BaseModel):
     message: str
 
@@ -169,7 +148,22 @@ async def send_whatsapp_message(message: WhatsAppMessage):
         "message": message.message
     }
 
-# === Run Server (Only for Local Dev) ===
+# === 🏠 Root Endpoint ===
+@app.get("/", tags=["Root"])
+async def root():
+    return {
+        "message": "✅ Welcome to SmartBiz Assistance API",
+        "docs": "/docs",
+        "status": "running"
+    }
+
+# === 🚦 On Startup Logging ===
+@app.on_event("startup")
+async def startup_event():
+    logging.info("🚀 SmartBiz Assistant backend is starting...")
+    logging.info(f"📡 Connected to DB: {DATABASE_URL}")
+
+# === ▶️ Entry Point for Local Development ===
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("backend.main:app", host="0.0.0.0", port=8000, reload=True)
