@@ -1,0 +1,34 @@
+﻿# 🔒 Python Virtual Environment
+venv/
+.venv/
+
+# 🔧 Bytecode files
+__pycache__/
+*.py[cod]
+
+# 🔒 System files
+.DS_Store
+Thumbs.db
+
+# 🧪 Test & Log folders
+*.log
+*.sqlite3
+*.db
+
+# ⚙️ Node + Frontend
+node_modules/
+dist/
+dev-dist/
+
+# 🔐 IDE folders
+.vscode/
+.idea/
+
+# 🧳 Backups & zips
+*.zip
+*.tar.gz
+*.bak
+
+# 📦 Env files
+.env
+.env.*
