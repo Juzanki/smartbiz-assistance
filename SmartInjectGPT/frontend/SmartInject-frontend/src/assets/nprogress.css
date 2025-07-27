@@ -1,0 +1,13 @@
+/* src/assets/nprogress.css */
+#nprogress {
+  pointer-events: none;
+}
+#nprogress .bar {
+  background: #2563eb; /* blue-600 */
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+}

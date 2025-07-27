@@ -1,0 +1,81 @@
+# 🔐 Mafaili ya siri
+.env
+.env.local
+.env.production
+*.env
+
+# 🐍 Python Bytecode & Caches
+__pycache__/
+*.py[cod]
+*$py.class
+
+# 🧪 Testing artifacts
+.pytest_cache/
+.cache/
+.coverage
+htmlcov/
+coverage.xml
+nosetests.xml
+test-results/
+
+# 🛠️ Editor/IDE settings
+.vscode/
+.idea/
+*.code-workspace
+
+# 💻 Logs & Debug
+*.log
+logs/
+debug_fix_log.txt
+fix_logs/
+fix_backups/
+
+# 📦 Venv folders
+venv/
+.venv/
+ENV/
+env/
+python_env/
+
+# 📦 Build & Egg files
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# 🌐 Frontend/Node tools
+node_modules/
+*.map
+*.cache
+.eslintcache
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 🛡️ Sensitive backups & ZIPs
+*.zip
+*.bak
+*.swp
+*.tmp
+*.old
+SmartBiz_Backups/
+
+# 📜 SQLite/DB
+*.sqlite3
+*.db
+
+# ☁️ Deployment configs
+render.yaml
+railway.json
+Procfile
+
+# 🐳 Docker & PID files
+*.pid
+docker-compose.override.yml
+
+# 📷 OS-specific files
+.DS_Store
+Thumbs.db
+
+# 🔒 Git merge leftovers
+*.orig

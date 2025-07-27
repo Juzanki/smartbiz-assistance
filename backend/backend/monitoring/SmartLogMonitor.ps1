@@ -1,1 +1,0 @@
-# SmartLogMonitor script

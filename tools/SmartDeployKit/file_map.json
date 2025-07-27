@@ -1,0 +1,11 @@
+{
+  "backend:fibonacci": "../backend/routes/ai_functions.py",
+  "backend:auth": "../backend/auth_routes.py",
+  "backend:forecast": "../backend/routes/forecast.py",
+  "backend:orders": "../backend/routes/orders.py",
+  "frontend:loginform": "../frontend/src/components/LoginForm.vue",
+  "frontend:dashboard": "../frontend/src/views/DashboardView.vue",
+  "frontend:navbar": "../frontend/src/components/NavBar.vue",
+  "ai:smartbot": "../backend/routes/ai_bot_routes.py",
+  "ai:assistant": "../backend/routes/ai_assistant.py"
+}

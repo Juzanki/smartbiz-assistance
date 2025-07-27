@@ -1,0 +1,8 @@
+{
+  "blueprint": {
+    "name": "gift_engine",
+    "type": "module",
+    "goal": "Build an AI-powered gift ranking engine with animations like TikTok",
+    "dependencies": ["animation_lib", "rewards_core"]
+  }
+}

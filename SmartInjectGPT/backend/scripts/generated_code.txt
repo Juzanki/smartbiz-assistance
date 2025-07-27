@@ -1,0 +1,33 @@
+<template>
+  <div class="gift-card p-4 rounded-xl shadow-xl text-center border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 transition-all duration-300">
+    <img :src="imageUrl" alt="Gift Image"
+         class="w-24 h-24 mx-auto mb-4 rounded-full shadow-md object-cover animate-bounce" />
+    <h2 class="text-xl font-bold text-primary mb-1">🎁 {{ name }}</h2>
+    <p class="text-sm text-gray-600 dark:text-gray-300 italic">✨ Motion: {{ motion }}</p>
+  </div>
+</template>
+
+<script setup>
+defineProps({
+  name: {
+    type: String,
+    default: 'JuzankiGift'
+  },
+  motion: {
+    type: String,
+    default: 'sparkle'
+  },
+  image: {
+    type: String,
+    default: 'juzanki.png'
+  }
+})
+
+const imageUrl = `/assets/gifts/${image}`
+</script>
+
+<style scoped>
+.gift-card:hover {
+  transform: scale(1.05);
+}
+</style>

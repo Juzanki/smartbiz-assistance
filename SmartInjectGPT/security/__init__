@@ -1,0 +1,2 @@
+env_path = os.getenv("INTEGRITY_LOG_PATH", "SmartInjectGPT/security/integrity_log.json")
+self._log_file = Path(env_path)

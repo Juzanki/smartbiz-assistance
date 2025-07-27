@@ -1,0 +1,742 @@
+[
+  {
+    "timestamp": "2025-05-25T12:14:56.660384",
+    "source": "https://hn.algolia.com/api/v1/search_by_date?tags=story",
+    "topic_detected": "General Innovation",
+    "risk": 0.0,
+    "raw": {
+      "exhaustive": {
+        "nbHits": false,
+        "typo": true
+      },
+      "exhaustiveNbHits": false,
+      "exhaustiveTypo": true,
+      "hits": [
+        {
+          "_highlightResult": {
+            "author": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "_tk_"
+            },
+            "title": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "Remembering John Young, co-founder of web archive Cryptome"
+            },
+            "url": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "https://www.theregister.com/2025/05/24/john_young_obituary/"
+            }
+          },
+          "_tags": [
+            "story",
+            "author__tk_",
+            "story_44087259"
+          ],
+          "author": "_tk_",
+          "created_at": "2025-05-25T12:12:20Z",
+          "created_at_i": 1748175140,
+          "num_comments": 0,
+          "objectID": "44087259",
+          "points": 1,
+          "story_id": 44087259,
+          "title": "Remembering John Young, co-founder of web archive Cryptome",
+          "updated_at": "2025-05-25T12:14:39Z",
+          "url": "https://www.theregister.com/2025/05/24/john_young_obituary/"
+        },
+        {
+          "_highlightResult": {
+            "author": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "yusef_dll"
+            },
+            "title": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "Sdss"
+            }
+          },
+          "_tags": [
+            "story",
+            "author_yusef_dll",
+            "story_44087250",
+            "ask_hn"
+          ],
+          "author": "yusef_dll",
+          "created_at": "2025-05-25T12:11:03Z",
+          "created_at_i": 1748175063,
+          "num_comments": 0,
+          "objectID": "44087250",
+          "points": 1,
+          "story_id": 44087250,
+          "title": "Sdss",
+          "updated_at": "2025-05-25T12:11:39Z"
+        },
+        {
+          "_highlightResult": {
+            "author": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "AlexeyBrin"
+            },
+            "title": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "Basic for the Raspberry Pi Pico and Pico 2"
+            },
+            "url": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "https://geoffg.net/picomite.html"
+            }
+          },
+          "_tags": [
+            "story",
+            "author_AlexeyBrin",
+            "story_44087248"
+          ],
+          "author": "AlexeyBrin",
+          "created_at": "2025-05-25T12:10:44Z",
+          "created_at_i": 1748175044,
+          "num_comments": 0,
+          "objectID": "44087248",
+          "points": 1,
+          "story_id": 44087248,
+          "title": "Basic for the Raspberry Pi Pico and Pico 2",
+          "updated_at": "2025-05-25T12:11:39Z",
+          "url": "https://geoffg.net/picomite.html"
+        },
+        {
+          "_highlightResult": {
+            "author": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "Eikon"
+            },
+            "title": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "Scaling Certificate Transparency and Postgres with 100B+ Rows of Data"
+            },
+            "url": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "https://blog.transparency.dev/merklemap-scaling-certificate-transparency-with-100b-rows-of-data"
+            }
+          },
+          "_tags": [
+            "story",
+            "author_Eikon",
+            "story_44087247"
+          ],
+          "author": "Eikon",
+          "created_at": "2025-05-25T12:10:42Z",
+          "created_at_i": 1748175042,
+          "num_comments": 0,
+          "objectID": "44087247",
+          "points": 2,
+          "story_id": 44087247,
+          "title": "Scaling Certificate Transparency and Postgres with 100B+ Rows of Data",
+          "updated_at": "2025-05-25T12:12:09Z",
+          "url": "https://blog.transparency.dev/merklemap-scaling-certificate-transparency-with-100b-rows-of-data"
+        },
+        {
+          "_highlightResult": {
+            "author": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "JustSkyfall"
+            },
+            "title": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "Use Your iPhone as an AirPlay Receiver"
+            },
+            "url": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "https://github.com/neon443/AirAP"
+            }
+          },
+          "_tags": [
+            "story",
+            "author_JustSkyfall",
+            "story_44087245"
+          ],
+          "author": "JustSkyfall",
+          "created_at": "2025-05-25T12:09:58Z",
+          "created_at_i": 1748174998,
+          "num_comments": 0,
+          "objectID": "44087245",
+          "points": 2,
+          "story_id": 44087245,
+          "title": "Use Your iPhone as an AirPlay Receiver",
+          "updated_at": "2025-05-25T12:13:10Z",
+          "url": "https://github.com/neon443/AirAP"
+        },
+        {
+          "_highlightResult": {
+            "author": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "bhuwanaryal1404"
+            },
+            "title": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "Show HN: Rebuilt TrendlyAI after \"AI slop\" feedback"
+            },
+            "url": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "https://trendlyai.com?v=2"
+            }
+          },
+          "_tags": [
+            "story",
+            "author_bhuwanaryal1404",
+            "story_44087223",
+            "show_hn"
+          ],
+          "author": "bhuwanaryal1404",
+          "children": [
+            44087266,
+            44087225
+          ],
+          "created_at": "2025-05-25T12:05:37Z",
+          "created_at_i": 1748174737,
+          "num_comments": 2,
+          "objectID": "44087223",
+          "points": 1,
+          "story_id": 44087223,
+          "title": "Show HN: Rebuilt TrendlyAI after \"AI slop\" feedback",
+          "updated_at": "2025-05-25T12:14:39Z",
+          "url": "https://trendlyai.com?v=2"
+        },
+        {
+          "_highlightResult": {
+            "author": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "rustoo"
+            },
+            "title": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "Counting the Cost of a Career Break"
+            },
+            "url": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "https://www.ft.com/content/d4ea544a-1f0b-46f6-bab2-d67a7622a651"
+            }
+          },
+          "_tags": [
+            "story",
+            "author_rustoo",
+            "story_44087219"
+          ],
+          "author": "rustoo",
+          "created_at": "2025-05-25T12:05:14Z",
+          "created_at_i": 1748174714,
+          "num_comments": 0,
+          "objectID": "44087219",
+          "points": 1,
+          "story_id": 44087219,
+          "title": "Counting the Cost of a Career Break",
+          "updated_at": "2025-05-25T12:06:24Z",
+          "url": "https://www.ft.com/content/d4ea544a-1f0b-46f6-bab2-d67a7622a651"
+        },
+        {
+          "_highlightResult": {
+            "author": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "danpoletaev"
+            },
+            "title": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "I Used AI SEO to Hit 200K Monthly Clicks from Google (Side Project Breakdown)"
+            },
+            "url": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "https://www.indiehackers.com/post/how-i-used-ai-seo-to-hit-200k-monthly-clicks-from-google-side-project-breakdown-342edb179d"
+            }
+          },
+          "_tags": [
+            "story",
+            "author_danpoletaev",
+            "story_44087216"
+          ],
+          "author": "danpoletaev",
+          "created_at": "2025-05-25T12:04:33Z",
+          "created_at_i": 1748174673,
+          "num_comments": 0,
+          "objectID": "44087216",
+          "points": 2,
+          "story_id": 44087216,
+          "title": "I Used AI SEO to Hit 200K Monthly Clicks from Google (Side Project Breakdown)",
+          "updated_at": "2025-05-25T12:06:24Z",
+          "url": "https://www.indiehackers.com/post/how-i-used-ai-seo-to-hit-200k-monthly-clicks-from-google-side-project-breakdown-342edb179d"
+        },
+        {
+          "_highlightResult": {
+            "author": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "besinpublic"
+            },
+            "story_text": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "Hey HN!<p>I created a forest in three.js where people can buy a tree and link it with their X/projects.<p>It got a lot of attention on X (100 trees/sales in the first 24 hours) so I made it 100% non-profit!<p>All profit goes to One Tree Planted, a non-profit org that plants trees around the world.<p>435$ dollars have already been donated, you can check it on my X (@besinpublic).<p>Feel free to check it out and happy to receive feedback!<p>Besim"
+            },
+            "title": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "Show HN: I made a game-like directory that reforests the Earth"
+            },
+            "url": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "https://www.communityfo.rest/"
+            }
+          },
+          "_tags": [
+            "story",
+            "author_besinpublic",
+            "story_44087211",
+            "show_hn"
+          ],
+          "author": "besinpublic",
+          "children": [
+            44087221
+          ],
+          "created_at": "2025-05-25T12:03:41Z",
+          "created_at_i": 1748174621,
+          "num_comments": 2,
+          "objectID": "44087211",
+          "points": 3,
+          "story_id": 44087211,
+          "story_text": "Hey HN!<p>I created a forest in three.js where people can buy a tree and link it with their X&#x2F;projects.<p>It got a lot of attention on X (100 trees&#x2F;sales in the first 24 hours) so I made it 100% non-profit!<p>All profit goes to One Tree Planted, a non-profit org that plants trees around the world.<p>435$ dollars have already been donated, you can check it on my X (@besinpublic).<p>Feel free to check it out and happy to receive feedback!<p>Besim",
+          "title": "Show HN: I made a game-like directory that reforests the Earth",
+          "updated_at": "2025-05-25T12:08:54Z",
+          "url": "https://www.communityfo.rest/"
+        },
+        {
+          "_highlightResult": {
+            "author": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "72736379"
+            },
+            "title": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "MultiTimeInMenuBar \u2013 multiple timezones with country flags on menu bar (macOS)"
+            },
+            "url": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "https://github.com/rshin7/MultiTimeInMenuBar"
+            }
+          },
+          "_tags": [
+            "story",
+            "author_72736379",
+            "story_44087209"
+          ],
+          "author": "72736379",
+          "children": [
+            44087210
+          ],
+          "created_at": "2025-05-25T12:03:06Z",
+          "created_at_i": 1748174586,
+          "num_comments": 1,
+          "objectID": "44087209",
+          "points": 1,
+          "story_id": 44087209,
+          "title": "MultiTimeInMenuBar \u2013 multiple timezones with country flags on menu bar (macOS)",
+          "updated_at": "2025-05-25T12:06:24Z",
+          "url": "https://github.com/rshin7/MultiTimeInMenuBar"
+        },
+        {
+          "_highlightResult": {
+            "author": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "swah"
+            },
+            "title": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "In defense of shallow technical knowledge"
+            },
+            "url": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "https://www.seangoedecke.com/shallow-technical-knowledge/"
+            }
+          },
+          "_tags": [
+            "story",
+            "author_swah",
+            "story_44087195"
+          ],
+          "author": "swah",
+          "created_at": "2025-05-25T11:59:06Z",
+          "created_at_i": 1748174346,
+          "num_comments": 0,
+          "objectID": "44087195",
+          "points": 1,
+          "story_id": 44087195,
+          "title": "In defense of shallow technical knowledge",
+          "updated_at": "2025-05-25T12:01:10Z",
+          "url": "https://www.seangoedecke.com/shallow-technical-knowledge/"
+        },
+        {
+          "_highlightResult": {
+            "author": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "tosh"
+            },
+            "title": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "Android's Linux Terminal app rolls out to more Google Pixel users"
+            },
+            "url": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "https://www.androidauthority.com/android-linux-terminal-app-available-3532999/"
+            }
+          },
+          "_tags": [
+            "story",
+            "author_tosh",
+            "story_44087192"
+          ],
+          "author": "tosh",
+          "created_at": "2025-05-25T11:58:39Z",
+          "created_at_i": 1748174319,
+          "num_comments": 0,
+          "objectID": "44087192",
+          "points": 1,
+          "story_id": 44087192,
+          "title": "Android's Linux Terminal app rolls out to more Google Pixel users",
+          "updated_at": "2025-05-25T12:01:10Z",
+          "url": "https://www.androidauthority.com/android-linux-terminal-app-available-3532999/"
+        },
+        {
+          "_highlightResult": {
+            "author": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "throw0101d"
+            },
+            "title": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "AI system resorts to blackmail if told it will be removed"
+            },
+            "url": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "https://www.bbc.com/news/articles/cpqeng9d20go"
+            }
+          },
+          "_tags": [
+            "story",
+            "author_throw0101d",
+            "story_44087186"
+          ],
+          "author": "throw0101d",
+          "children": [
+            44087197
+          ],
+          "created_at": "2025-05-25T11:56:59Z",
+          "created_at_i": 1748174219,
+          "num_comments": 1,
+          "objectID": "44087186",
+          "points": 1,
+          "story_id": 44087186,
+          "title": "AI system resorts to blackmail if told it will be removed",
+          "updated_at": "2025-05-25T12:01:10Z",
+          "url": "https://www.bbc.com/news/articles/cpqeng9d20go"
+        },
+        {
+          "_highlightResult": {
+            "author": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "pulisse"
+            },
+            "title": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "Investigating Wrench Attacks: Physical Attacks Targeting Cryptocurrency Users [pdf]"
+            },
+            "url": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "https://drops.dagstuhl.de/storage/00lipics/lipics-vol316-aft2024/LIPIcs.AFT.2024.24/LIPIcs.AFT.2024.24.pdf"
+            }
+          },
+          "_tags": [
+            "story",
+            "author_pulisse",
+            "story_44087183",
+            "front_page"
+          ],
+          "author": "pulisse",
+          "children": [
+            44087256
+          ],
+          "created_at": "2025-05-25T11:56:16Z",
+          "created_at_i": 1748174176,
+          "num_comments": 1,
+          "objectID": "44087183",
+          "points": 9,
+          "story_id": 44087183,
+          "title": "Investigating Wrench Attacks: Physical Attacks Targeting Cryptocurrency Users [pdf]",
+          "updated_at": "2025-05-25T12:12:39Z",
+          "url": "https://drops.dagstuhl.de/storage/00lipics/lipics-vol316-aft2024/LIPIcs.AFT.2024.24/LIPIcs.AFT.2024.24.pdf"
+        },
+        {
+          "_highlightResult": {
+            "author": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "conanxin"
+            },
+            "title": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "From Philosophy to Power: The Misuse of Ren\u00e9 Girard by Peter Thiel, J.D. Vance"
+            },
+            "url": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "https://salmagundi.skidmore.edu/articles/1176-from-philosophy-to-power"
+            }
+          },
+          "_tags": [
+            "story",
+            "author_conanxin",
+            "story_44087178"
+          ],
+          "author": "conanxin",
+          "created_at": "2025-05-25T11:55:02Z",
+          "created_at_i": 1748174102,
+          "num_comments": 0,
+          "objectID": "44087178",
+          "points": 2,
+          "story_id": 44087178,
+          "title": "From Philosophy to Power: The Misuse of Ren\u00e9 Girard by Peter Thiel, J.D. Vance",
+          "updated_at": "2025-05-25T11:57:09Z",
+          "url": "https://salmagundi.skidmore.edu/articles/1176-from-philosophy-to-power"
+        },
+        {
+          "_highlightResult": {
+            "author": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "rntn"
+            },
+            "title": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "A Word of Advice for American Automakers Afraid of a Chinese 'Invasion': Git Gud"
+            },
+            "url": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "https://www.jalopnik.com/1867134/american-automakers-afraid-of-chinese-invasion/"
+            }
+          },
+          "_tags": [
+            "story",
+            "author_rntn",
+            "story_44087155"
+          ],
+          "author": "rntn",
+          "created_at": "2025-05-25T11:49:57Z",
+          "created_at_i": 1748173797,
+          "num_comments": 0,
+          "objectID": "44087155",
+          "points": 2,
+          "story_id": 44087155,
+          "title": "A Word of Advice for American Automakers Afraid of a Chinese 'Invasion': Git Gud",
+          "updated_at": "2025-05-25T12:10:09Z",
+          "url": "https://www.jalopnik.com/1867134/american-automakers-afraid-of-chinese-invasion/"
+        },
+        {
+          "_highlightResult": {
+            "author": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "phendrenad2"
+            },
+            "story_text": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "What is the niche of the future that can amp my salary up to $500,000? (which is about where we should all be due to inflation, by the way, I'm just trying to get to the front of the line)"
+            },
+            "title": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "Ask HN: How can I make $500k/year?"
+            }
+          },
+          "_tags": [
+            "story",
+            "author_phendrenad2",
+            "story_44087152",
+            "ask_hn"
+          ],
+          "author": "phendrenad2",
+          "created_at": "2025-05-25T11:49:40Z",
+          "created_at_i": 1748173780,
+          "num_comments": 0,
+          "objectID": "44087152",
+          "points": 1,
+          "story_id": 44087152,
+          "story_text": "What is the niche of the future that can amp my salary up to $500,000? (which is about where we should all be due to inflation, by the way, I&#x27;m just trying to get to the front of the line)",
+          "title": "Ask HN: How can I make $500k/year?",
+          "updated_at": "2025-05-25T11:50:39Z"
+        },
+        {
+          "_highlightResult": {
+            "author": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "milkshakes"
+            },
+            "title": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "At Amazon, Some Coders Say Their Jobs Have Begun to Resemble Warehouse Work"
+            },
+            "url": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "https://www.nytimes.com/2025/05/25/business/amazon-ai-coders.html"
+            }
+          },
+          "_tags": [
+            "story",
+            "author_milkshakes",
+            "story_44087150"
+          ],
+          "author": "milkshakes",
+          "children": [
+            44087224
+          ],
+          "created_at": "2025-05-25T11:48:30Z",
+          "created_at_i": 1748173710,
+          "num_comments": 1,
+          "objectID": "44087150",
+          "points": 2,
+          "story_id": 44087150,
+          "title": "At Amazon, Some Coders Say Their Jobs Have Begun to Resemble Warehouse Work",
+          "updated_at": "2025-05-25T12:06:54Z",
+          "url": "https://www.nytimes.com/2025/05/25/business/amazon-ai-coders.html"
+        },
+        {
+          "_highlightResult": {
+            "author": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "thunderbong"
+            },
+            "title": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "The Man Behind 'The Martian' (2015)"
+            },
+            "url": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "https://www.thedailybeast.com/the-man-behind-the-martian/"
+            }
+          },
+          "_tags": [
+            "story",
+            "author_thunderbong",
+            "story_44087138"
+          ],
+          "author": "thunderbong",
+          "created_at": "2025-05-25T11:43:55Z",
+          "created_at_i": 1748173435,
+          "num_comments": 0,
+          "objectID": "44087138",
+          "points": 1,
+          "story_id": 44087138,
+          "title": "The Man Behind 'The Martian' (2015)",
+          "updated_at": "2025-05-25T11:45:24Z",
+          "url": "https://www.thedailybeast.com/the-man-behind-the-martian/"
+        },
+        {
+          "_highlightResult": {
+            "author": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "sirobg"
+            },
+            "title": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "The Day Elon Musk Decided to Personally Rip Servers Out of a Data Center (2023)"
+            },
+            "url": {
+              "matchLevel": "none",
+              "matchedWords": [],
+              "value": "https://www.techdirt.com/2023/09/12/the-batshit-crazy-story-of-the-day-elon-musk-decided-to-personally-rip-servers-out-of-a-sacramento-data-center/"
+            }
+          },
+          "_tags": [
+            "story",
+            "author_sirobg",
+            "story_44087137"
+          ],
+          "author": "sirobg",
+          "created_at": "2025-05-25T11:43:50Z",
+          "created_at_i": 1748173430,
+          "num_comments": 0,
+          "objectID": "44087137",
+          "points": 1,
+          "story_id": 44087137,
+          "title": "The Day Elon Musk Decided to Personally Rip Servers Out of a Data Center (2023)",
+          "updated_at": "2025-05-25T11:45:24Z",
+          "url": "https://www.techdirt.com/2023/09/12/the-batshit-crazy-story-of-the-day-elon-musk-decided-to-personally-rip-servers-out-of-a-sacramento-data-center/"
+        }
+      ],
+      "hitsPerPage": 20,
+      "nbHits": 3688110,
+      "nbPages": 50,
+      "page": 0,
+      "params": "tags=story&advancedSyntax=true&analyticsTags=backend",
+      "processingTimeMS": 2,
+      "processingTimingsMS": {
+        "_request": {
+          "roundTrip": 19
+        },
+        "afterFetch": {
+          "total": 1
+        },
+        "fetch": {
+          "total": 1
+        },
+        "total": 2
+      },
+      "query": "",
+      "serverTimeMS": 3
+    }
+  }
+]

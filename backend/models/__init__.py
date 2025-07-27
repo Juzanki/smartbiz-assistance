@@ -1,36 +1,53 @@
-# === backend/models/__init__.py ===
+# === 📦 backend/models/__init__.py ===
+# Central model registry for SQLAlchemy + Alembic
 
-# ✅ Base metadata (required for Alembic)
+# ✅ Base metadata (required by Alembic)
 from backend.db import Base
 
-# ✅ User model first (other models depend on it)
+# 👤 Users & Identity
 from .user import User
+from .user_device import UserDevice
+from .customer import Customer
+from .guests import Guest
 
-# 🔧 Core Activity & Settings
-from .activity_score import ActivityScore
-from .ai_bot_settings import AIBotSettings
-from .api_key import APIKey
-from .audit_log import AuditLog
-from .auto_reply_training import AutoReplyTraining
-
-# 💳 Billing & Transactions
-from .billing_log import BillingLog
-from .smart_coin_wallet import SmartCoinWallet
-from .smart_coin_transaction import SmartCoinTransaction
-from .gift_model import Gift
-from .gift_movement import GiftMovement
-from .gift_fly import GiftFly
-from .gift_transaction import GiftTransaction  # ✅ Newly added
-
-# 🛒 Commerce & Orders
+# 🛍️ Products & Orders
+from .product import Product
 from .order import Order
 from .payment import Payment
-from .product import Product
+
+# 💳 Coins & Wallets
+from .coin_wallet import CoinWallet
+from .smart_coin_wallet import SmartCoinWallet
+from .smart_coin_transaction import SmartCoinTransaction
+
+# 🎁 Gifts & Transactions
+from .gift_model import Gift
+from .gift_transaction import GiftTransaction
+from .gift_movement import GiftMovement
+from .gift_fly import GiftFly
+
+# 📺 Streaming & Videos
+from .live_stream import LiveStream
+from .live_session import LiveSession
+from .recorded_stream import RecordedStream
+from .replay_events import ReplayEvent
+from .video_post import VideoPost
+
+# 🤖 Bots & AI
+from .user_bot import UserBot
+from .bot_package import BotPackage
+from .ai_bot_settings import AIBotSettings
+from .auto_reply_training import AutoReplyTraining
 
 # 📣 Campaigns & Referrals
 from .campaign import Campaign, CampaignAffiliate
 from .referral_bonus import ReferralBonus
 from .referral_log import ReferralLog
+
+# 🔔 Notifications & Messaging
+from .notification import Notification
+from .notification_preferences import NotificationPreference
+from .message import MessageLog, ScheduledMessage
 
 # 📊 Analytics & Logs
 from .analytics import AnalyticsSnapshot
@@ -41,55 +58,41 @@ from .search_log import SearchLog
 from .post_log import PostLog
 from .feedback import CustomerFeedback
 from .login_history import LoginHistory
-from .message import MessageLog, ScheduledMessage
-from .notification import Notification
-from .notification_preferences import NotificationPreference
 from .webhook_delivery_log import WebhookDeliveryLog
 
-# 🤖 Bots & AI
-from .user_bot import UserBot
-from .bot_package import BotPackage
+# ⚙️ Core Utilities & Admin
+from .setting import Setting, Settings
+from .api_key import APIKey
+from .audit_log import AuditLog
+from .platform_status import PlatformStatus
 
-# 👥 Users & Devices
-from .user_device import UserDevice
-from .customer import Customer
-from .guests import Guest
-
-# 📺 Streaming & Video
-from .live_stream import LiveStream
-from .live_session import LiveSession
-from .recorded_stream import RecordedStream
-from .replay_events import ReplayEvent
-from .video_post import VideoPost
-
-# 🪄 Magic, Loyalty & Subscriptions
+# 🪄 Magic, Loyalty & Subscription
 from .magic_link import MagicLink
 from .loyalty import LoyaltyPoint
 from .subscription import SubscriptionPlan, UserSubscription
 
-# 🔧 Support & Tickets
+# 🧰 Support & Tickets
 from .support import SupportTicket
 
-# 🔐 Security & Access
-from .password_reset import PasswordResetCode
-from .platform_status import PlatformStatus
-
-# 📌 Tags & Social Media
+# 🏷️ Tags & Social Media
 from .smart_tags import Tag
 from .social_media_post import SocialMediaPost
 
-# 👥 Co-hosting Features
+# 👥 Co-hosting
 from .co_host import CoHost
 from .co_host_invite import CoHostInvite
 
-# 📡 Connected Platforms
+# 🌐 Connected Platforms
 from .connected_platform import ConnectedPlatform
 
-# ✈️ Drone/IoT Missions
+# ✈️ Drone & IoT
 from .drone_mission import DroneMission
 
-# 🏅 Badges
-from .badge_history import BadgeHistory  # ✅ For tracking badge assignments
+# 🏅 Badges & History
+from .badge_history import BadgeHistory
 
-# ✅ Settings
-from .setting import Setting, Settings
+# 🧠 Activity Scores
+from .activity_score import ActivityScore
+
+# 🔐 Security
+from .password_reset import PasswordResetCode

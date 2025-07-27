@@ -1,0 +1,9 @@
+from sqlalchemy.orm import Session
+from backend.models import User
+
+def get_user_by_identifier(db: Session, identifier: str):
+    return db.query(User).filter(
+        (User.email == identifier) |
+        (User.username == identifier) |
+        (User.phone_number == identifier)
+    ).first()

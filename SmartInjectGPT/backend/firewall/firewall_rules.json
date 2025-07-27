@@ -1,0 +1,29 @@
+# === prompt_firewall.ps1 ===
+param (
+    [string]$PromptText
+)
+
+$rulesPath = "$PSScriptRoot\..\firewall\firewall_rules.json"
+
+if (-not (Test-Path $rulesPath)) {
+    Write-Host "`n❌ ERROR: Firewall rules not found at $rulesPath" -ForegroundColor Red
+    exit 1
+}
+
+# Load rules
+$rules = Get-Content -Raw -Path $rulesPath | ConvertFrom-Json
+$blocked = $rules.blocked_keywords
+
+# Normalize prompt to lowercase and trim
+$normalizedPrompt = $PromptText.ToLower().Trim()
+
+foreach ($keyword in $blocked) {
+    $pattern = $keyword.ToLower().Trim()
+    if ($normalizedPrompt -like "*$pattern*") {
+        Write-Host "`n⛔ BLOCKED: Prompt contains banned keyword ➤ '$keyword'" -ForegroundColor Red
+        Write-Host "🧾 Prompt: `"$PromptText`"" -ForegroundColor DarkGray
+        exit 1
+    }
+}
+
+Write-Host "`n✅ Prompt passed 🔐 firewall checks." -ForegroundColor Green

@@ -1,0 +1,82 @@
+05/13/2025 07:55:07 ?? Fixed in E:\SmartBiz_Assistance\backend\crud\auto_reply_crud.py:         AutoReply.platform == platform,
+05/13/2025 07:55:07 ?? Fixed in E:\SmartBiz_Assistance\backend\crud\platforms_crud.py:         platform=data.platform,
+05/13/2025 07:55:08 ?? Fixed in E:\SmartBiz_Assistance\backend\models\connected_platform.py:         return f"<ConnectedPlatform(user_id={self.user_id}, platform='{self.platform}')>"
+05/13/2025 07:55:09 ?? Fixed in E:\SmartBiz_Assistance\backend\models\platform_status.py:         return f"<PlatformStatus(user_id={self.user_id}, platform='{self.platform}', connected={self.is_connected})>"
+05/13/2025 07:55:09 ?? Fixed in E:\SmartBiz_Assistance\backend\models\post_log.py:         return f"<PostLog(user_id={self.user_id}, platform='{self.platform}', status='{self.status}')>"
+05/13/2025 07:55:12 ?? Fixed in E:\SmartBiz_Assistance\backend\routes\platforms.py:         platform=payload.platform.lower(),
+05/13/2025 07:55:12 ?? Fixed in E:\SmartBiz_Assistance\backend\routes\reply.py:     if payload.platform == "telegram":
+05/13/2025 07:55:12 ?? Fixed in E:\SmartBiz_Assistance\backend\routes\reply.py:     elif payload.platform == "whatsapp":
+05/13/2025 07:55:12 ?? Fixed in E:\SmartBiz_Assistance\backend\routes\reply.py:     elif payload.platform == "sms":
+05/13/2025 07:55:13 ?? Fixed in E:\SmartBiz_Assistance\backend\tasks\scheduler.py:                 if msg.platform == "telegram":
+05/13/2025 07:55:13 ?? Fixed in E:\SmartBiz_Assistance\backend\tasks\scheduler.py:                 elif msg.platform == "whatsapp":
+05/13/2025 07:55:13 ?? Fixed in E:\SmartBiz_Assistance\backend\tasks\scheduler.py:                 elif msg.platform == "sms":
+05/13/2025 07:55:18 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\six.py:     if sys.platform.startswith("java"):
+05/13/2025 07:55:18 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\six.py: if sys.platform == "win32":
+05/13/2025 07:55:28 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\aiohttp\test_utils.py: REUSE_ADDRESS = os.name == "posix" and sys.platform != "cygwin"
+05/13/2025 07:55:29 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\aiohttp\web_urldispatcher.py:     if sys.version_info < (3, 10) and sys.platform.startswith("win32")
+05/13/2025 07:55:38 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\anyio\_core\_sockets.py:         type=socket.SocketKind.SOCK_STREAM if sys.platform == "win32" else 0,
+05/13/2025 07:55:38 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\anyio\_core\_sockets.py:             if sys.platform != "win32" and kind is not SocketKind.SOCK_STREAM:
+05/13/2025 07:55:38 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\anyio\_core\_sockets.py:             if sys.platform == "win32":
+05/13/2025 07:55:41 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\astroid\const.py: WIN32 = sys.platform == "win32"
+05/13/2025 07:55:42 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\astroid\modutils.py: if sys.platform.startswith("win"):
+05/13/2025 07:55:44 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\astroid\brain\brain_signal.py:     if sys.platform != "win32":
+05/13/2025 07:55:44 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\astroid\brain\brain_signal.py:     if sys.platform == "win32":
+05/13/2025 07:55:44 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\astroid\brain\brain_signal.py:     if sys.platform not in ("darwin", "win32"):
+05/13/2025 07:55:44 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\astroid\brain\brain_signal.py:     if sys.platform != "win32":
+05/13/2025 07:55:51 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\babel\localedata.py:     if sys.platform == "win32" and _windows_reserved_name_re.match(os.path.splitext(name)[0]):
+05/13/2025 07:55:52 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\babel\localtime\__init__.py: if sys.platform == 'win32':
+05/13/2025 07:56:02 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\cffi\api.py:             if sys.platform == "win32":
+05/13/2025 07:56:02 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\cffi\api.py:             if sys.platform == "win32":
+05/13/2025 07:56:02 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\cffi\api.py:         if sys.platform == "win32":
+05/13/2025 07:56:02 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\cffi\api.py:         if sys.platform != "win32" or name is not None:
+05/13/2025 07:56:02 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\cffi\api.py:         if name == "c" and sys.platform == "win32" and sys.version_info >= (3,):
+05/13/2025 07:56:02 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\cffi\commontypes.py: if sys.platform == 'win32':
+05/13/2025 07:56:03 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\cffi\recompiler.py: USE_LIMITED_API = (sys.platform != 'win32' or sys.version_info < (3, 0) or
+05/13/2025 07:56:03 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\cffi\recompiler.py:     if sys.platform == 'win32':
+05/13/2025 07:56:03 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\cffi\recompiler.py:     if sys.platform == 'darwin':
+05/13/2025 07:56:03 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\cffi\recompiler.py:         if sys.platform == 'win32':
+05/13/2025 07:56:03 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\cffi\recompiler.py:         elif sys.platform == 'darwin':
+05/13/2025 07:56:03 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\cffi\vengine_gen.py:         if sys.platform == 'win32':
+05/13/2025 07:56:04 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\cffi\verifier.py:         if sys.platform == 'win32':
+05/13/2025 07:56:04 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\cffi\_shimmed_dist_utils.py:     if sys.platform == 'win32':
+05/13/2025 07:56:07 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\click\utils.py:     if sys.platform == "darwin":
+05/13/2025 07:56:07 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\click\_compat.py: CYGWIN = sys.platform.startswith("cygwin")
+05/13/2025 07:56:07 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\click\_compat.py: WIN = sys.platform.startswith("win")
+05/13/2025 07:56:07 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\click\_compat.py: if sys.platform.startswith("win") and WIN:
+05/13/2025 07:56:07 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\click\_termui_impl.py:     if (WIN or sys.platform.startswith("os2")) and _tempfilepager(
+05/13/2025 07:56:07 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\click\_termui_impl.py:     if sys.platform == "darwin":
+05/13/2025 07:56:07 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\click\_winconsole.py: assert sys.platform == "win32"
+05/13/2025 07:56:09 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\cloudinary\api_client\tcp_keep_alive_manager.py:         platform = sys.platform
+05/13/2025 07:56:09 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\colorama\initialise.py:     if sys.platform != "win32":
+05/13/2025 07:56:10 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\colorama\tests\initialise_test.py:         if sys.platform != "win32":
+05/13/2025 07:56:10 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\colorama\tests\winterm_test.py:     @skipUnless(sys.platform.startswith("win"), "requires Windows")
+05/13/2025 07:56:10 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\colorama\tests\winterm_test.py:     @skipUnless(sys.platform.startswith("win"), "requires Windows")
+05/13/2025 07:56:10 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\colorama\tests\winterm_test.py:     @skipUnless(sys.platform.startswith("win"), "requires Windows")
+05/13/2025 07:56:10 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\colorama\tests\winterm_test.py:     @skipUnless(sys.platform.startswith("win"), "requires Windows")
+05/13/2025 07:56:11 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\cryptography\hazmat\bindings\openssl\binding.py:     sys.platform == "win32"
+05/13/2025 07:56:14 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\dateutil\tz\tz.py: if sys.platform != "win32":
+05/13/2025 07:56:16 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\dill\source.py:             if sys.platform[:3] == 'win':
+05/13/2025 07:56:16 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\dill\_dill.py: IS_PYODIDE = sys.platform == 'emscripten'
+05/13/2025 07:56:16 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\dill\_objects.py: IS_PYODIDE = sys.platform == 'emscripten'
+05/13/2025 07:56:16 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\dill\_objects.py:     if sys.platform[:3] == 'win':
+05/13/2025 07:56:16 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\dill\_objects.py: if sys.platform[:3] == 'win':
+05/13/2025 07:56:18 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\dill\tests\test_temp.py: WINDOWS = sys.platform[:3] == 'win'
+05/13/2025 07:56:18 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\dill\tests\__main__.py: shell = sys.platform[:3] == 'win'
+05/13/2025 07:56:20 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\dns\resolver.py: if sys.platform == "win32":  # pragma: no cover
+05/13/2025 07:56:20 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\dns\resolver.py:             if sys.platform == "win32":  # pragma: no cover
+05/13/2025 07:56:21 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\dns\win32util.py: if sys.platform == "win32":
+05/13/2025 07:56:22 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\dns\_asyncio_backend.py: _is_win32 = sys.platform == "win32"
+05/13/2025 07:56:33 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\greenlet\tests\__init__.py: WIN = sys.platform.startswith("win")
+05/13/2025 07:56:36 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\httpcore\_utils.py:         sys.platform == "win32" or getattr(select, "poll", None) is None
+05/13/2025 07:56:36 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\httpcore\_backends\sync.py:         if sys.platform == "win32":
+05/13/2025 07:56:47 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\imageio\core\findlib.py:     if sys.platform.startswith("win"):
+05/13/2025 07:56:47 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\imageio\core\findlib.py:     elif sys.platform.startswith("darwin"):
+05/13/2025 07:56:47 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\imageio\core\findlib.py:     if sys.platform.startswith("win"):
+05/13/2025 07:56:48 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\imageio\core\util.py:     if sys.platform.startswith("win"):
+05/13/2025 07:56:48 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\imageio\core\util.py:     elif sys.platform.startswith("darwin"):
+05/13/2025 07:56:48 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\imageio\core\util.py:     sys.platform does. The result can be: linux32, linux64, win32,
+05/13/2025 07:56:48 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\imageio\core\util.py:     if sys.platform.startswith("linux"):
+05/13/2025 07:56:48 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\imageio\core\util.py:     elif sys.platform.startswith("win"):
+05/13/2025 07:56:48 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\imageio\core\util.py:     elif sys.platform.startswith("darwin"):
+05/13/2025 07:56:48 ?? Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\imageio\core\util.py:     elif sys.platform.startswith("freebsd"):
+05/13/2025 07:56:52 - Fixed in E:\SmartBiz_Assistance\venv\Lib\site-packages\imageio\core\util.py:     elif sys.platform.startswith("freebsd"):

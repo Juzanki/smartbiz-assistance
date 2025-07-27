@@ -1,0 +1,6 @@
+[
+  {
+    "role": "admin",
+    "permissions": ["view_logs", "manage_users"]
+  }
+]

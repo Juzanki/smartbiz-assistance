@@ -1,0 +1,10 @@
+[
+  {
+    "role": "owner",
+    "permissions": ["manage_admins", "view_logs", "generate_links"]
+  },
+  {
+    "role": "admin",
+    "permissions": ["view_logs"]
+  }
+]
