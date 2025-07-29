@@ -1,4 +1,4 @@
- <template>
+<template>
   <div class="min-vh-100 d-flex align-items-center justify-content-center bg-dark">
     <div
       class="card shadow-lg p-4 rounded-4 border-2 border-warning"
@@ -15,58 +15,55 @@
         <h2 class="fw-bold text-warning text-center mb-0" style="font-size:1.55rem;">Login to SmartBiz</h2>
       </div>
 
-```
-  <hr class="mb-4 border-warning opacity-75"/>
+      <hr class="mb-4 border-warning opacity-75"/>
 
-  <form @submit.prevent="handleLogin" autocomplete="off">
-    <div class="mb-3 input-group bg-[#232338] rounded-3 overflow-hidden">
-      <span class="input-group-text bg-transparent border-0 text-warning"><i class="bi bi-person-fill"></i></span>
-      <input
-        v-model="form.identifier"
-        type="text"
-        class="form-control bg-transparent border-0 text-white"
-        placeholder="Enter Username, Email, or Phone"
-        autocomplete="username"
-        required
-        style="font-size:1rem;"
-      />
-    </div>
-    <div class="mb-3 input-group bg-[#232338] rounded-3 overflow-hidden">
-      <span class="input-group-text bg-transparent border-0 text-warning"><i class="bi bi-lock-fill"></i></span>
-      <input
-        v-model="form.password"
-        type="password"
-        class="form-control bg-transparent border-0 text-white"
-        placeholder="Enter Password"
-        autocomplete="current-password"
-        required
-        style="font-size:1rem;"
-      />
-    </div>
-    <button
-      type="submit"
-      class="btn btn-warning w-100 fw-bold mb-2 py-2 rounded-3"
-      :disabled="loading"
-    >
-      <span v-if="!loading">Login</span>
-      <span v-else>
-        <i class="bi bi-arrow-repeat spinner-border spinner-border-sm"></i>
-        Logging in...
-      </span>
-    </button>
-  </form>
+      <form @submit.prevent="handleLogin" autocomplete="off">
+        <div class="mb-3 input-group bg-[#232338] rounded-3 overflow-hidden">
+          <span class="input-group-text bg-transparent border-0 text-warning"><i class="bi bi-person-fill"></i></span>
+          <input
+            v-model="form.identifier"
+            type="text"
+            class="form-control bg-transparent border-0 text-white"
+            placeholder="Enter Username, Email, or Phone"
+            autocomplete="username"
+            required
+            style="font-size:1rem;"
+          />
+        </div>
+        <div class="mb-3 input-group bg-[#232338] rounded-3 overflow-hidden">
+          <span class="input-group-text bg-transparent border-0 text-warning"><i class="bi bi-lock-fill"></i></span>
+          <input
+            v-model="form.password"
+            type="password"
+            class="form-control bg-transparent border-0 text-white"
+            placeholder="Enter Password"
+            autocomplete="current-password"
+            required
+            style="font-size:1rem;"
+          />
+        </div>
+        <button
+          type="submit"
+          class="btn btn-warning w-100 fw-bold mb-2 py-2 rounded-3"
+          :disabled="loading"
+        >
+          <span v-if="!loading">Login</span>
+          <span v-else>
+            <i class="bi bi-arrow-repeat spinner-border spinner-border-sm"></i>
+            Logging in...
+          </span>
+        </button>
+      </form>
 
-  <!-- Signup & Forgot Links -->
-  <div class="d-flex flex-column align-items-center gap-1 mt-2 text-sm">
-    <div>
-      <span class="text-light">Don't have an account?</span>
-      <router-link to="/signup" class="text-warning fw-bold ms-1">Signup</router-link>
+      <!-- Signup & Forgot Links -->
+      <div class="d-flex flex-column align-items-center gap-1 mt-2 text-sm">
+        <div>
+          <span class="text-light">Don't have an account?</span>
+          <router-link to="/signup" class="text-warning fw-bold ms-1">Signup</router-link>
+        </div>
+        <router-link to="/forgot-password" class="text-info">Forgot Password?</router-link>
+      </div>
     </div>
-    <router-link to="/forgot-password" class="text-info">Forgot Password?</router-link>
-  </div>
-</div>
-```
-
   </div>
 </template>
 
@@ -85,7 +82,7 @@ const form = ref({
   password: ''
 })
 
-const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:8000'
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 
 const handleLogin = async () => {
   loading.value = true
@@ -98,49 +95,23 @@ const handleLogin = async () => {
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
     })
 
-const accessToken = res.data.access_token;
-const userRole = res.data.role || 'user';    // Hakikisha backend irudishe role
-const userName = res.data.name || '';
-const userLang = res.data.language || 'en';
+    const { access_token, role = 'user', name = '', language = 'en' } = res.data
 
-// Hifadhi kwenye localStorage mara moja
-localStorage.setItem('access_token', accessToken);
-localStorage.setItem('user_role', userRole);
-localStorage.setItem('user_name', userName);
-localStorage.setItem('user_lang', userLang);
+    localStorage.setItem('access_token', access_token)
+    localStorage.setItem('user_role', role)
+    localStorage.setItem('user_name', name)
+    localStorage.setItem('user_lang', language)
 
-// Set Authorization header kwa Axios kwa future requests zote
-axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-
-toast.success('✅ Login successful! Welcome!');
-
-// Smart Redirection kulingana na Role
-const roleDashboardRoutes = {
-  admin: '/dashboard/admin',
-  owner: '/dashboard/owner',
-  user: '/dashboard/user'    // default route
-};
-
-await router.push(roleDashboardRoutes[userRole] || '/dashboard/user');
-
-
-
-    localStorage.setItem('access_token', accessToken)
-    localStorage.setItem('user_role', userRole)
-
-    // Set Authorization Header kwa future requests
-    axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`
-
+    axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`
     toast.success('✅ Login successful! Welcome!')
 
-    // Smart Redirection based on role
-    if (userRole === 'admin') {
-      await router.push('/dashboard/admin')
-    } else if (userRole === 'owner') {
-      await router.push('/dashboard/owner')
-    } else {
-      await router.push('/dashboard/user') // default kwa user wa kawaida
+    const dashboardRoutes = {
+      admin: '/dashboard/admin',
+      owner: '/dashboard/owner',
+      user: '/dashboard/user'
     }
+
+    await router.push(dashboardRoutes[role] || '/dashboard/user')
   } catch (err) {
     if (err.response?.status === 401) {
       toast.error('❌ Invalid credentials. Please check your username/email/phone and password.')
@@ -183,7 +154,8 @@ hr {
   border: none !important;
   font-weight: 600;
 }
-.btn-warning:active, .btn-warning:focus {
+.btn-warning:active,
+.btn-warning:focus {
   background: #ffec80 !important;
 }
 </style>
