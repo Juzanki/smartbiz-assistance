@@ -1,4 +1,4 @@
-﻿from pydantic import BaseModel
+from pydantic import BaseModel
 from datetime import datetime
 
 class RecordedStreamCreate(BaseModel):
@@ -14,4 +14,4 @@ class RecordedStreamOut(BaseModel):
     uploaded_at: datetime
 
     class Config:
-        orm_mode = True
+        from_attributes = True

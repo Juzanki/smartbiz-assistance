@@ -3,10 +3,15 @@ from sqlalchemy import Column, String, Integer, DateTime, Boolean
 from sqlalchemy.orm import relationship
 from backend.db import Base
 
+
 class User(Base):
+    """
+    🧑‍💼 User Model - Central entity representing system users and their connections.
+    """
+
     __tablename__ = "users"
 
-    # ========== Core Fields ==========
+    # === Core Identity Fields ===
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String(50), unique=True, nullable=False, index=True)
     email = Column(String(120), unique=True, nullable=False, index=True)
@@ -14,17 +19,17 @@ class User(Base):
     role = Column(String(20), default="user", nullable=False)
     full_name = Column(String(100), nullable=True)
     phone_number = Column(String(20), unique=True, index=True, nullable=True)
-    language = Column(String(10), nullable=True, default="sw")
+    language = Column(String(10), default="sw", nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
 
-    # ========== Extra Profile Fields ==========
-    profile_image = Column(String, nullable=True)  # ✅ Added: for displaying user's avatar
-    is_active = Column(Boolean, default=True)      # ✅ Added: to control account status
-    is_verified = Column(Boolean, default=False)   # ✅ Optional: for badge or blue-check
-    badge_level = Column(String, default='none')   # none, bronze, silver, gold, etc.
-    subscription_status = Column(String, default="inactive")  # inactive, active, expired
+    # === Enhanced Profile Info ===
+    profile_image = Column(String, nullable=True)
+    is_active = Column(Boolean, default=True)
+    is_verified = Column(Boolean, default=False)
+    badge_level = Column(String, default='none')
+    subscription_status = Column(String, default="inactive")
 
-    # ========== Relationships ==========
+    # === One-to-Many & One-to-One Relationships ===
     posts = relationship("SocialMediaPost", back_populates="user", cascade="all, delete-orphan", lazy='selectin')
     payments = relationship("Payment", back_populates="user", cascade="all, delete-orphan")
     joined_campaigns = relationship("CampaignAffiliate", back_populates="user", cascade="all, delete-orphan")
@@ -39,12 +44,12 @@ class User(Base):
     platforms = relationship("ConnectedPlatform", back_populates="user", cascade="all, delete-orphan")
     ai_bot_settings = relationship("AIBotSettings", back_populates="user", uselist=False, cascade="all, delete-orphan")
     notifications = relationship("Notification", back_populates="user", cascade="all, delete-orphan")
+    notification_preferences = relationship("NotificationPreference", back_populates="user", uselist=False, cascade="all, delete-orphan")
     loyalty_points = relationship("LoyaltyPoint", back_populates="user", cascade="all, delete-orphan")
     drone_missions = relationship("DroneMission", back_populates="user", cascade="all, delete-orphan")
     customers = relationship("Customer", back_populates="user", cascade="all, delete-orphan")
     analytics_snapshots = relationship("AnalyticsSnapshot", back_populates="user", cascade="all, delete-orphan")
     billing_logs = relationship("BillingLog", back_populates="user", cascade="all, delete-orphan")
-    notification_preferences = relationship("NotificationPreference", back_populates="user", uselist=False, cascade="all, delete-orphan")
     customer_feedbacks = relationship("CustomerFeedback", back_populates="user", cascade="all, delete-orphan")
     activity_score = relationship("ActivityScore", uselist=False, back_populates="user", cascade="all, delete-orphan")
     referral_bonuses = relationship("ReferralBonus", back_populates="referrer", cascade="all, delete-orphan", foreign_keys="[ReferralBonus.referrer_id]")
@@ -72,9 +77,9 @@ class User(Base):
     video_views = relationship("VideoViewStat", back_populates="viewer", cascade="all, delete-orphan")
     badge_history = relationship("BadgeHistory", back_populates="user")
 
-
     def __repr__(self):
-        return f"<User #{self.id} | {self.username} - {self.email}>"
+        return f"<User #{self.id} | {self.username}>"
 
-# ✅ Delay heavy model imports to prevent circular references
+# ✅ Delayed Imports to prevent circular dependencies
 from .social_media_post import SocialMediaPost
+from .billing_log import BillingLog

@@ -1,4 +1,4 @@
-# === 🌟 SmartBiz Assistance Backend Entrypoint (main.py) ===
+# === 🌟 SmartBiz Assistance Backend Entrypoint (main.py) === 
 # 🚀 Built with FastAPI + SQLAlchemy + .env + WebSockets + Background Jobs
 # =======================================================================
 
@@ -17,7 +17,7 @@ from pydantic import BaseModel
 
 # === 🌍 Load Environment Variables ===
 BASE_DIR = Path(__file__).resolve().parent
-load_dotenv(BASE_DIR / ".env")
+load_dotenv(BASE_DIR / ".env.production")  # 💡 Load .env.production
 
 # === 🛠️ Local Modules ===
 from backend.db import Base, SessionLocal, engine
@@ -51,6 +51,7 @@ from backend.routes.order_notification import router as order_notification_route
 from backend.routes.injection_log_routes import router as injection_log_router
 from backend.routes.ai_responder import router as ai_router
 from backend.routes.auth_routes import router as auth_router
+from backend.routes import coin_wallet
 
 # === 🚀 FastAPI App Initialization ===
 app = FastAPI(
@@ -60,16 +61,22 @@ app = FastAPI(
 )
 
 # === 🌐 CORS Configuration ===
+RAILWAY_PUBLIC_URL = os.getenv("RAILWAY_PUBLIC_URL")
+NETLIFY_PUBLIC_URL = os.getenv("NETLIFY_PUBLIC_URL")
+
 origins = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
-    os.getenv("VITE_API_URL", ""),
-    os.getenv("VITE_NGROK_URL", ""),
 ]
+
+if RAILWAY_PUBLIC_URL:
+    origins.append(RAILWAY_PUBLIC_URL)
+if NETLIFY_PUBLIC_URL:
+    origins.append(NETLIFY_PUBLIC_URL)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[origin for origin in origins if origin],
+    allow_origins=origins,
     allow_origin_regex=r"https://.*\.ngrok-free\.app|https://.*\.trycloudflare\.com",
     allow_credentials=True,
     allow_methods=["*"],
@@ -80,10 +87,10 @@ app.add_middleware(
 app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 app.add_middleware(language_middleware)
 
-# === 🧠 Database Initialization ===
+# === 🧐 Database Initialization ===
 Base.metadata.create_all(bind=engine)
 
-# === 🧪 Dependency for DB Session ===
+# === 🦠 Dependency for DB Session ===
 def get_db():
     db = SessionLocal()
     try:
@@ -94,7 +101,7 @@ def get_db():
 # === ✅ Sanity Check for DATABASE_URL ===
 DATABASE_URL = os.getenv("DATABASE_URL")
 if not DATABASE_URL:
-    raise RuntimeError("❌ DATABASE_URL is missing. Please check your .env file.")
+    raise RuntimeError("❌ DATABASE_URL is missing. Please check your .env.production file.")
 
 # === 📜 Logging Configuration ===
 logging.basicConfig(
@@ -106,10 +113,10 @@ logging.basicConfig(
 start_background_tasks()
 start_schedulers()
 
-# === 📡 Include All Routers ===
+# === 📱 Include All Routers ===
 app.include_router(auth_router, prefix="/auth", tags=["Auth"])
+app.include_router(coin_wallet.router)
 
-# 🧩 Essential Core Routes
 core_routes = [
     (register.router, "/register-user", ["Register"]),
     (logout.router, "/logout", ["Logout"]),

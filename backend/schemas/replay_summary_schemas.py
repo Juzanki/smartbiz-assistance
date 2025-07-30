@@ -10,4 +10,4 @@ class ReplaySummaryOut(BaseModel):
     summary_text: str
 
     class Config:
-        orm_mode = True
+        from_attributes = True

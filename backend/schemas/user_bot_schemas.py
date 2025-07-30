@@ -17,4 +17,4 @@ class UserBotOut(BaseModel):
     bot_package_id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True

@@ -1,4 +1,4 @@
-﻿from pydantic import BaseModel
+from pydantic import BaseModel
 from datetime import datetime
 from typing import Optional
 
@@ -8,7 +8,7 @@ class BalanceOut(BaseModel):
     updated_at: datetime
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class WithdrawRequestCreate(BaseModel):
     amount: float
@@ -23,4 +23,4 @@ class WithdrawRequestOut(BaseModel):
     is_paid: bool
 
     class Config:
-        orm_mode = True
+        from_attributes = True

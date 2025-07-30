@@ -1,4 +1,4 @@
-﻿from pydantic import BaseModel
+from pydantic import BaseModel
 from datetime import datetime
 from typing import Optional
 
@@ -15,4 +15,4 @@ class WithdrawRequestOut(BaseModel):
     is_paid: bool
 
     class Config:
-        orm_mode = True
+        from_attributes = True

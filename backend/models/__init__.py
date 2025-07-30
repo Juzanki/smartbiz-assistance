@@ -16,7 +16,6 @@ from .order import Order
 from .payment import Payment
 
 # 💳 Coins & Wallets
-from .coin_wallet import CoinWallet
 from .smart_coin_wallet import SmartCoinWallet
 from .smart_coin_transaction import SmartCoinTransaction
 

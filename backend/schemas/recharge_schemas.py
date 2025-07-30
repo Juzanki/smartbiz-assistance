@@ -1,4 +1,4 @@
-﻿from pydantic import BaseModel
+from pydantic import BaseModel
 from datetime import datetime
 
 class RechargeCreate(BaseModel):
@@ -16,4 +16,4 @@ class RechargeOut(BaseModel):
     created_at: datetime
 
     class Config:
-        orm_mode = True
+        from_attributes = True
