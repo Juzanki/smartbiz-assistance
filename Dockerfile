@@ -1,37 +1,29 @@
 ﻿# =========================================================
-# 🐳 Dockerfile for SmartBiz Assistance (Production Ready)
-# ✅ Railway-compatible + Auto Migration + Clean Structure
+# 🐳 Dockerfile for SmartBiz Assistance (Railway Optimized)
+# ✅ No start.sh — direct uvicorn execution
+# ✅ Clean structure + safe for production
 # =========================================================
 
-# 🐍 Base Python image (lightweight)
+# 🐍 Base Python image
 FROM python:3.10-slim
 
-# 📂 Working directory inside the container
+# 📁 Set working directory
 WORKDIR /app
 
-# 📋 Copy only requirements first (for layer caching)
+# 📋 Copy and install dependencies first (layer caching)
 COPY requirements.txt .
-
-# 📦 Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# 🗂️ Copy the rest of the codebase
+# 🗂️ Copy the entire app code
 COPY . .
 
-# 🌐 UTF-8 Encoding settings (avoid Unicode issues)
+# 🌐 Environment settings to handle encoding
 ENV PYTHONIOENCODING=utf-8
 ENV LANG=C.UTF-8
 ENV LC_ALL=C.UTF-8
 
-# ❌ Removed this line to fix build failure
-# COPY .env.production .env.production
-
-# 🚀 Copy and prepare startup script
-COPY start.sh /start.sh
-RUN chmod +x /start.sh
-
-# 🌍 Expose FastAPI default port
+# 🌍 Expose FastAPI default port (used by Railway)
 EXPOSE 8000
 
-# 🚦 Start app using the startup script (runs migrations + uvicorn)
-CMD ["/start.sh"]
+# 🚀 Start FastAPI using uvicorn
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
