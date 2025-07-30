@@ -23,8 +23,8 @@ ENV PYTHONIOENCODING=utf-8
 ENV LANG=C.UTF-8
 ENV LC_ALL=C.UTF-8
 
-# 🔐 Copy environment variables file
-COPY .env.production .env.production
+# ❌ Removed this line to fix build failure
+# COPY .env.production .env.production
 
 # 🚀 Copy and prepare startup script
 COPY start.sh /start.sh
