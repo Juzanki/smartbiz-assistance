@@ -1,4 +1,4 @@
-# ====================================================
+﻿# ====================================================
 # ? Dockerfile for SmartBiz Assistance (Railway Ready)
 # ====================================================
 
@@ -25,4 +25,4 @@ ENV LC_ALL=C.UTF-8
 EXPOSE 8000
 
 # ?? Launch FastAPI using uvicorn from backend.main
-CMD ["uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["sh", "-c", "uvicorn backend.main:app --host=0.0.0.0 --port=${PORT:-8000}"]
