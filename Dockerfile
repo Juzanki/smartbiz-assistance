@@ -1,28 +1,28 @@
-﻿# ====================================================
-# ✅ Dockerfile for SmartBiz Assistance (Railway Ready)
+# ====================================================
+# ? Dockerfile for SmartBiz Assistance (Railway Ready)
 # ====================================================
 
-# 🐍 Lightweight official Python base image
+# ?? Lightweight official Python base image
 FROM python:3.10-slim
 
-# 📁 Set working directory
+# ?? Set working directory
 WORKDIR /app
 
-# 📦 Install dependencies
+# ?? Install dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# 📂 Copy entire app
+# ?? Copy entire app
 COPY . .
 
-# 🌐 Set UTF-8 encoding
+# ?? Set UTF-8 encoding
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONIOENCODING=utf-8
 ENV LANG=C.UTF-8
 ENV LC_ALL=C.UTF-8
 
-# 🚪 Expose FastAPI port
+# ?? Expose FastAPI port
 EXPOSE 8000
 
-# 🚀 Launch FastAPI using uvicorn from backend.main
+# ?? Launch FastAPI using uvicorn from backend.main
 CMD ["uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "8000"]
