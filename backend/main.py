@@ -1,4 +1,4 @@
-# === 🌟 SmartBiz Assistance Backend Entrypoint (main.py) === 
+# === 🌟 SmartBiz Assistance Backend Entrypoint (main.py) ===
 # 🚀 Built with FastAPI + SQLAlchemy + .env + WebSockets + Background Jobs
 # =======================================================================
 
@@ -17,7 +17,7 @@ from pydantic import BaseModel
 
 # === 🌍 Load Environment Variables ===
 BASE_DIR = Path(__file__).resolve().parent
-load_dotenv(BASE_DIR / ".env.production")  # 💡 Load .env.production
+load_dotenv(BASE_DIR / ".env.production")
 
 # === 🛠️ Local Modules ===
 from backend.db import Base, SessionLocal, engine
@@ -67,6 +67,7 @@ NETLIFY_PUBLIC_URL = os.getenv("NETLIFY_PUBLIC_URL")
 origins = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
+    "https://sprightly-naiad-bcfd2a.netlify.app"  # ✅ Netlify domain
 ]
 
 if RAILWAY_PUBLIC_URL:
@@ -77,11 +78,13 @@ if NETLIFY_PUBLIC_URL:
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
-    allow_origin_regex=r"https://.*\.ngrok-free\.app|https://.*\.trycloudflare\.com",
+    allow_origin_regex=r"https:\/\/.*\.(ngrok-free\.app|trycloudflare\.com)$",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+logging.info(f"✅ CORS allowed origins: {origins}")
 
 # === 🗂️ Static & Middleware ===
 app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
