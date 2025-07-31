@@ -1,22 +1,18 @@
-﻿# ====================================================
-# ✅ Dockerfile for SmartBiz Assistance (Fixed PORT error)
-# ====================================================
-
+﻿# ✅ Base image
 FROM python:3.10-slim
 
+# ✅ Set workdir
 WORKDIR /app
 
+# ✅ Copy requirements and install
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
+# ✅ Copy everything else
 COPY . .
 
-ENV PYTHONUNBUFFERED=1
-ENV PYTHONIOENCODING=utf-8
-ENV LANG=C.UTF-8
-ENV LC_ALL=C.UTF-8
-
+# ✅ Expose port (Railway uses env PORT)
 EXPOSE 8000
 
-# ✅ Launch via start.py to use dynamic PORT
-CMD ["python", "backend/start.py"]
+# ✅ Run using start.py
+CMD ["python", "start.py"]

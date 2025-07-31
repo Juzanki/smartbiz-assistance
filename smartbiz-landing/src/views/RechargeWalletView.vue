@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div class="min-h-screen p-6 flex flex-col items-center justify-center bg-white dark:bg-[#121212]">
     <h2 class="text-2xl font-bold text-yellow-500 mb-2 animate-pulse">RechargeWalletView</h2>
     <p class="text-sm text-gray-500 dark:text-gray-300">This SmartBiz mobile component is under enhancement.</p>
@@ -6,7 +6,7 @@
 </template>
 
 <script setup>
-// ✅ Logic placeholder for RechargeWalletView
+// ? Logic placeholder for RechargeWalletView
 // TODO: Add interactivity here.
 </script>
 

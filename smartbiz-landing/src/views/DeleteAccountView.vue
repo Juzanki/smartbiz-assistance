@@ -52,7 +52,7 @@ const loading = ref(false)
 const router = useRouter()
 const toast = useToast()
 
-const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:8000'
+const API_BASE = import.meta.env.VITE_API_BASE || import.meta.env.VITE_API_BASE || 'http://localhost:8000'
 
 const confirmDelete = async () => {
   if (!password.value) {

@@ -69,3 +69,5 @@ cypress/screenshots/
 # 🧠 AI or Dev Tools (Optional)
 # ========================
 *.code-workspace
+
+.env.production

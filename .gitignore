@@ -32,3 +32,6 @@ dev-dist/
 # 📦 Env files
 .env
 .env.*
+
+# Local Netlify folder
+.netlify

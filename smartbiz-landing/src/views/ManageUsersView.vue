@@ -87,7 +87,7 @@ import axios from 'axios'
 const toast = useToast()
 const users = ref([])
 const searchQuery = ref('')
-const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:8000'
+const API_BASE = import.meta.env.VITE_API_BASE || import.meta.env.VITE_API_BASE || 'http://localhost:8000'
 
 onMounted(async () => {
   await fetchUsers()

@@ -73,7 +73,7 @@ import { useToast } from 'vue-toastification'
 const toast = useToast()
 const loading = ref(false)
 const loadingPass = ref(false)
-const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:8000'
+const API_BASE = import.meta.env.VITE_API_BASE || import.meta.env.VITE_API_BASE || 'http://localhost:8000'
 
 const form = ref({
   full_name: '',
