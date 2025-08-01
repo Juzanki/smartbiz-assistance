@@ -1,23 +1,26 @@
-﻿# ✅ Base image
+﻿# ✅ Base Python image (lightweight + secure)
 FROM python:3.10-slim
 
 # ✅ Set working directory inside the container
 WORKDIR /app
 
-# ✅ Optional system dependencies (for psycopg2 or wheels)
-RUN apt-get update && apt-get install -y build-essential gcc
+# ✅ Install essential system packages (e.g., for psycopg2, wheels)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential gcc \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
 
-# ✅ Copy only requirements file first for cache optimization
+# ✅ Copy requirements file first for Docker layer caching
 COPY requirements.txt .
 
-# ✅ Install Python dependencies
+# ✅ Install Python dependencies safely
 RUN pip install --no-cache-dir -r requirements.txt
 
-# ✅ Copy the rest of the application code
+# ✅ Copy the rest of the application code into container
 COPY . .
 
-# ✅ Expose the port (Railway injects $PORT but defaults to 8000)
+# ✅ Expose port (Railway injects $PORT; fallback to 8000)
 EXPOSE 8000
 
-# ✅ Run FastAPI using uvicorn with correct path to main.py
-CMD ["uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "8000"]
+# ✅ Launch FastAPI with Uvicorn (production-safe)
+CMD ["sh", "-c", "uvicorn backend.main:app --host 0.0.0.0 --port ${PORT:-8000}"]
