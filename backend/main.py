@@ -1,12 +1,9 @@
 # === 🌟 SmartBiz Assistance Backend Entrypoint (main.py) ===
-# 🚀 Built with FastAPI + SQLAlchemy + .env + WebSockets + Background Jobs
-# =======================================================================
+# ✅ Optimized for Railway - No .env or Path dependencies
 
 import os
 import logging
-from pathlib import Path
 from typing import List
-
 from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -14,9 +11,7 @@ from sqlalchemy.orm import Session
 from apscheduler.schedulers.background import BackgroundScheduler
 from pydantic import BaseModel
 
-# === 🌍 Load Environment Variables ===
-
-# === 🛠️ Local Modules ===
+# === 🔗 Local Modules ===
 from backend.db import Base, SessionLocal, engine
 from backend.middleware.language import language_middleware
 from backend.background import start_background_tasks
@@ -25,7 +20,6 @@ from backend.websocket import ws_routes, live_ws
 from backend.crud.user_crud import get_user_by_identifier, get_user, get_users, create_user
 from backend.schemas.user import UserCreate, UserOut as UserResponse
 
-# === 🔁 Core & Extended Routes ===
 from backend.routes import (
     register, logout, profile, forgot_password, pay_mpesa, pay_pesapal,
     admin_routes, subscription, telegram_bot, broadcast, negotiation_bot,
@@ -50,21 +44,20 @@ from backend.routes.ai_responder import router as ai_router
 from backend.routes.auth_routes import router as auth_router
 from backend.routes import coin_wallet
 
-# === 🚀 FastAPI App Initialization ===
 app = FastAPI(
     title="SmartBiz Assistance API",
     description="Powerful SaaS backend for automating business operations",
     version="1.0.0"
 )
 
-# === 🌐 CORS Configuration ===
+# === 🌐 CORS
 RAILWAY_PUBLIC_URL = os.getenv("RAILWAY_PUBLIC_URL")
 NETLIFY_PUBLIC_URL = os.getenv("NETLIFY_PUBLIC_URL")
 
 origins = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
-    "https://sprightly-naiad-bcfd2a.netlify.app"  # ✅ Netlify domain
+    "https://sprightly-naiad-bcfd2a.netlify.app"
 ]
 
 if RAILWAY_PUBLIC_URL:
@@ -81,16 +74,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-logging.info(f"✅ CORS allowed origins: {origins}")
-
-# === 🗂️ Static & Middleware ===
 app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 app.add_middleware(language_middleware)
 
-# === 🧐 Database Initialization ===
+# === 📦 DB Setup
 Base.metadata.create_all(bind=engine)
 
-# === 🦠 Dependency for DB Session ===
 def get_db():
     db = SessionLocal()
     try:
@@ -98,22 +87,16 @@ def get_db():
     finally:
         db.close()
 
-# === ✅ Sanity Check for DATABASE_URL ===
+# ✅ Check DB Connection Var
 DATABASE_URL = os.getenv("DATABASE_URL")
 if not DATABASE_URL:
-    raise RuntimeError("❌ DATABASE_URL is missing. Please check your .env.production file.")
+    raise RuntimeError("❌ DATABASE_URL missing. Please define it in Railway variables.")
 
-# === 📜 Logging Configuration ===
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s | %(levelname)s | %(message)s",
-)
-
-# === ⏱️ Startup Background Jobs ===
+# === 🔁 Background Tasks
 start_background_tasks()
 start_schedulers()
 
-# === 📱 Include All Routers ===
+# === Routers
 app.include_router(auth_router, prefix="/auth", tags=["Auth"])
 app.include_router(coin_wallet.router)
 
@@ -127,7 +110,7 @@ core_routes = [
 for router, prefix, tags in core_routes:
     app.include_router(router, prefix=prefix or "", tags=tags)
 
-# === 👤 User Management Endpoints ===
+# === Users
 @app.post("/users/", response_model=UserResponse, status_code=status.HTTP_201_CREATED, tags=["Users"])
 def create_new_user(user: UserCreate, db: Session = Depends(get_db)):
     return create_user(db=db, user=user)
@@ -143,7 +126,7 @@ def read_user(user_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="User not found")
     return db_user
 
-# === 💬 WhatsApp Sample Message ===
+# === WhatsApp Sample
 class WhatsAppMessage(BaseModel):
     message: str
 
@@ -155,7 +138,7 @@ async def send_whatsapp_message(message: WhatsAppMessage):
         "message": message.message
     }
 
-# === 🏠 Root Endpoint ===
+# === Root
 @app.get("/", tags=["Root"])
 async def root():
     return {
@@ -164,13 +147,18 @@ async def root():
         "status": "running"
     }
 
-# === 🚦 On Startup Logging ===
+# === Logging
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s | %(levelname)s | %(message)s",
+)
+
 @app.on_event("startup")
 async def startup_event():
     logging.info("🚀 SmartBiz Assistant backend is starting...")
     logging.info(f"📡 Connected to DB: {DATABASE_URL}")
 
-# === ▶️ Entry Point for Local Development ===
+# === Local Dev Entry (optional)
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("backend.main:app", host="0.0.0.0", port=8000, reload=True)
