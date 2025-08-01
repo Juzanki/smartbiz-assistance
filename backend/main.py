@@ -15,7 +15,6 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from pydantic import BaseModel
 
 # === 🌍 Load Environment Variables ===
-BASE_DIR = Path(__file__).resolve().parent
 
 # === 🛠️ Local Modules ===
 from backend.db import Base, SessionLocal, engine
