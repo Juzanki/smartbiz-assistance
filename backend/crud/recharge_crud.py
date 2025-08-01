@@ -1,4 +1,4 @@
-﻿from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session
 from backend.models.recharge_transaction import RechargeTransaction
 from backend.models.balance import Balance
 from backend.schemas.recharge_schemas import RechargeCreate

@@ -11,7 +11,6 @@ from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
 from sqlalchemy.orm import Session
-from dotenv import load_dotenv
 
 from backend.models import User  # ✅ Corrected: Use from models, not schemas
 from backend.db import SessionLocal
@@ -24,7 +23,6 @@ from backend.utils.security import (
 )
 
 # ========== Load Environment ==========
-load_dotenv()
 ACCESS_TOKEN_EXPIRE_MINUTES = int(
     os.getenv(
         "ACCESS_TOKEN_EXPIRE_MINUTES",

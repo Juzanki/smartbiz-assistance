@@ -1,4 +1,4 @@
-﻿from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session
 from backend.models.recorded_stream import RecordedStream
 from backend.schemas.recorded_stream_schemas import *
 

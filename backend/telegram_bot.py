@@ -1,14 +1,12 @@
 import logging
 import openai
 import os
-from dotenv import load_dotenv
 from telegram import Update
 from telegram.ext import (
     ApplicationBuilder, CommandHandler, MessageHandler, ContextTypes, filters
 )
 
 # ===================== ENVIRONMENT SETUP =====================
-load_dotenv()  # Load variables from .env file
 
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")

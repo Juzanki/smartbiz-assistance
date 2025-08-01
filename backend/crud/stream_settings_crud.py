@@ -1,4 +1,4 @@
-﻿from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session
 from backend.models.stream_settings import StreamSettings
 from backend.schemas.stream_settings_schemas import *
 

@@ -11,13 +11,11 @@ from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from sqlalchemy.orm import Session
-from dotenv import load_dotenv
 from apscheduler.schedulers.background import BackgroundScheduler
 from pydantic import BaseModel
 
 # === 🌍 Load Environment Variables ===
 BASE_DIR = Path(__file__).resolve().parent
-load_dotenv(BASE_DIR / ".env.production")
 
 # === 🛠️ Local Modules ===
 from backend.db import Base, SessionLocal, engine

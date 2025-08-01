@@ -1,10 +1,8 @@
 from openai import OpenAI
 import json
 import os
-from dotenv import load_dotenv
 
 # 🔐 Load environment variables
-load_dotenv()
 api_key = os.getenv("OPENAI_API_KEY")
 
 # ✅ Thibitisha API key ipo

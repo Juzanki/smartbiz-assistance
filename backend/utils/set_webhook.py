@@ -1,9 +1,7 @@
 import requests
 import os
-from dotenv import load_dotenv
 
 # Load environment variables from .env
-load_dotenv()
 
 BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 WEBHOOK_URL = os.getenv("WEBHOOK_URL")

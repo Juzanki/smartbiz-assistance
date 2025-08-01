@@ -1,4 +1,4 @@
-﻿from sqlalchemy import Column, Integer, String, Boolean, DateTime
+from sqlalchemy import Column, Integer, String, Boolean, DateTime
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from backend.db import Base
@@ -31,6 +31,6 @@ class LiveStream(Base):
     gift_markers = relationship("GiftMarker", back_populates="stream", cascade="all, delete-orphan")
     recorded_streams = relationship("RecordedStream", back_populates="stream", cascade="all, delete-orphan")
 
-    # ⛔️ Removed the faulty relationship:
-    # settings = relationship("System.Collections.Hashtable.from", ...) ❌
+    # ?? Removed the faulty relationship:
+    # settings = relationship("System.Collections.Hashtable.from", ...) ?
 

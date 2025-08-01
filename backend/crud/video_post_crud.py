@@ -1,4 +1,4 @@
-﻿from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session
 from backend.models.video_post import VideoPost
 from backend.schemas.video_post_schemas import *
 

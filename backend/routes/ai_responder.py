@@ -3,13 +3,11 @@
 import os
 import openai
 import httpx
-from dotenv import load_dotenv
 from fastapi import APIRouter, HTTPException, Depends, status
 from pydantic import BaseModel
 from backend.auth import get_current_user
 from backend.models import User
 
-load_dotenv()
 
 router = APIRouter(prefix="/ai", tags=["AI Assistant"])
 

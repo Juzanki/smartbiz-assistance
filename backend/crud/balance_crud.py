@@ -1,4 +1,4 @@
-﻿from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session
 from backend.models.balance import Balance, WithdrawRequest
 from backend.schemas.balance_schemas import WithdrawRequestCreate
 from datetime import datetime

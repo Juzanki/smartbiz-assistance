@@ -9,12 +9,10 @@ from logging.config import fileConfig
 
 from sqlalchemy import engine_from_config, pool
 from alembic import context
-from dotenv import load_dotenv
 
 # ==================== 📂 Load Environment =========================
 # Load environment variables from .env.production in parent folder
 base_dir = os.path.dirname(os.path.dirname(__file__))
-load_dotenv(dotenv_path=os.path.join(base_dir, ".env.production"))
 
 # Fetch the database URL from environment
 DATABASE_URL = os.getenv("RAILWAY_DATABASE_URL")

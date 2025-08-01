@@ -1,4 +1,4 @@
-﻿import re
+import re
 
 COMMON_WORDS = {
     "the", "a", "an", "is", "are", "to", "of", "in", "on", "for", "and", "with", "you", "this", "that", "it", "we", "our"

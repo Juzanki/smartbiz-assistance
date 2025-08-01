@@ -1,4 +1,4 @@
-﻿# start.py
+# start.py
 import os
 import uvicorn
 from backend.main import app

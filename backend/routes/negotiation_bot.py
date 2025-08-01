@@ -1,6 +1,5 @@
 import os
 import logging
-from dotenv import load_dotenv
 import openai
 from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import BaseModel, Field
@@ -9,7 +8,6 @@ from backend.models import User
 from backend.utils.access_control import require_plan
 
 # ========== Setup ==========
-load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
 if not openai.api_key:
     raise RuntimeError("❌ OPENAI_API_KEY not found in environment.")

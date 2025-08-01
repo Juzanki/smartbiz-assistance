@@ -1,10 +1,8 @@
 # backend/config.py
 
 import os
-from dotenv import load_dotenv
 
 # Load .env file
-load_dotenv()
 
 # PDF Generator
 PDF_API_KEY = os.getenv("PDF_GENERATOR_API_KEY")

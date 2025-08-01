@@ -5,9 +5,7 @@ from backend.db import get_db
 from backend.models import User
 from sqlalchemy.orm import Session
 import os
-from dotenv import load_dotenv
 
-load_dotenv()
 SECRET_KEY = os.getenv("SECRET_KEY")
 ALGORITHM = os.getenv("ALGORITHM")
 
