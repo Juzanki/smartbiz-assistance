@@ -1,111 +1,74 @@
-<<<<<<< HEAD
-﻿# 🔒 Python Virtual Environment
-venv/
-.venv/
-
-# 🔧 Bytecode files
-__pycache__/
-*.py[cod]
-
-# 🔒 System files
-.DS_Store
-Thumbs.db
-
-# 🧪 Test & Log folders
-*.log
-*.sqlite3
-*.db
-
-# ⚙️ Node + Frontend
-node_modules/
-dist/
-dev-dist/
-
-# 🔐 IDE folders
-.vscode/
-.idea/
-
-# 🧳 Backups & zips
-*.zip
-*.tar.gz
-*.bak
-
-# 📦 Env files
+# 🔐 Environment & Secret Files
 .env
 .env.*
-
-# Local Netlify folder
-.netlify
-=======
-# 🔐 Mafaili ya mazingira ya siri
-.env
-.env.production
-.env.local
 *.env
-.env.*.backup
-.env.*.example
 *.secrets
 *.key
 *.pem
 *.crt
+.envrc
+*.local.env
+*.dev.env
 
-# 🧠 Cache ya Python
+# 🧠 Python Bytecode & Cache
 __pycache__/
-*.py[cod]
+*.pyc
+*.pyo
+*.pyd
 *$py.class
 
-# 🛠️ Editor na system files
-.vscode/
-.idea/
-.DS_Store
-Thumbs.db
-
-# 📦 Mafaili ya package management
-*.egg-info/
-.eggs/
-dist/
-build/
-
-# 💻 Logs na Debug files
-*.log
-logs/
-*.sqlite3
-*.sqlite
-*.db-journal
-
-# 📜 SQLite fallback (ikiwa umetumia wakati wa development)
-*.db
-
-# 💾 Backup zenye zip files
-*.zip
-SmartBiz_Backups/
-*.bak.zip
-
-# ☁️ Deployment platform files
-railway.json
-render.yaml
-Procfile
-
-# 📦 Virtual environment (venv)
+# ⚙️ Python Virtual Environments
 venv/
 .venv/
 ENV/
 env/
 python_env/
 
-# 🧪 Testing artifacts
+# 🛠 IDE & System Files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# 📦 Python Package Management
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# 🧪 Testing Artifacts & Coverage
 htmlcov/
 .coverage
 .cache/
 .pytest_cache/
-
-# 🧪 Coverage reports
 coverage.xml
 nosetests.xml
 test-results/
 
-# 📦 Compiled assets (kama unatumia frontend ndani ya backend)
+# 📁 Logs & Databases
+*.log
+logs/
+*.sqlite
+*.sqlite3
+*.db
+*.db-journal
+
+# 💾 Backups & Archives
+*.bak
+*.bak.zip
+*.zip
+*.tar.gz
+SmartBiz_Backups/
+
+# ☁️ Deployment Platform Files
+railway.json
+render.yaml
+Procfile
+
+# 💻 Node / Frontend Tools (if embedded)
 node_modules/
+dist/
+dev-dist/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -113,43 +76,30 @@ package-lock.json
 pnpm-lock.yaml
 yarn.lock
 
-# 🌐 Frontend tools
+# 🌐 Frontend Tool Cache
 *.map
 *.cache
 .eslintcache
-*.DS_Store
-*.idea/
 
 # 🐳 Docker
 *.pid
 docker-compose.override.yml
 .dockerignore
 
-# 🧾 Misc
-*.bak
-*.swp
-*.tmp
-*.old
-
-# 🔒 GitHub backup files
-*.orig
-
-# ⚠️ Auto-generated configs
+# ⚠️ Auto-generated Editor Configs
 .settings/
 *.code-workspace
 
-# 🛡️ PowerShell metadata
+# 💻 PowerShell Metadata
 *.ps1~
 *.ps1.bak
 
-# 📷 Image metadata or generated diagrams (optional)
+# 🖼 Generated Media/Diagrams (optional)
 *.svg
 *.pdf
 *.drawio
 *.plantuml
 
-# 🔄 Files for syncing secrets or local-only configs
-*.local.env
-*.dev.env
-.envrc
->>>>>>> 39aaa5419d4d78972badb2e9bf74eb1ffebb8a0d
+# 🖼 Uploads & Media Folders
+uploads/**
+backend/uploads/**
