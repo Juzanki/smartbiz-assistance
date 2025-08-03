@@ -1,7 +1,6 @@
 <template>
   <aside class="d-flex flex-column bg-dark text-white p-3" style="width: 240px; min-height: 100vh;">
     <div class="d-flex align-items-center mb-4">
-      <img src="/logo-circle.png" alt="Logo" class="me-2" style="width: 40px; height: 40px; border-radius: 50%;">
       <span class="fs-5 fw-bold">Affiliate</span>
     </div>
 

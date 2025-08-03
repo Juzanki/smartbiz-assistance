@@ -4,7 +4,6 @@
     <!-- LOGO TOP-LEFT -->
     <div class="absolute top-4 left-4">
       <img
-        src="@/assets/logo.png"
         alt="SmartInjectGPT Logo"
         class="w-12 h-12 rounded-full border border-yellow-400 shadow bg-white object-contain"
       />

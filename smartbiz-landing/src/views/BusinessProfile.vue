@@ -72,7 +72,6 @@ const router = useRouter()
 const route = useRoute()
 
 const business = ref(null)
-const defaultLogo = '/default-logo.png'
 
 onMounted(() => {
   const id = route.params.id

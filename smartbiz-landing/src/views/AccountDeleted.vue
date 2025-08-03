@@ -1,7 +1,6 @@
 <template>
   <div class="min-vh-100 d-flex flex-column justify-content-center align-items-center bg-dark text-center text-light px-4">
     <div class="p-4 rounded-4 shadow-lg border border-danger" style="background:#1e1e2f; max-width: 460px;">
-      <img src="@/assets/logo-circle.png" alt="SmartBiz Logo" class="mb-3 rounded-circle border border-warning" style="width:60px;height:60px;background:white;" />
       <h2 class="text-danger fw-bold mb-3">Account Deleted</h2>
       <p class="text-secondary small mb-4">
         Your account has been permanently removed from SmartBiz Assistance.<br>

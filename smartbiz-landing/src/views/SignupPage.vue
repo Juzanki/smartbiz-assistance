@@ -3,7 +3,6 @@
     <!-- 🧠 LOGO + Title -->
     <div class="text-center mb-3 mt-4 animate-fade-in">
       <img
-        src="@/assets/logo-circle.png"
         alt="SmartBiz Logo"
         class="rounded-circle border border-warning shadow"
         style="width: 72px; height: 72px; background: #fff;"

@@ -8,7 +8,6 @@
         <label class="block text-sm mb-2">System Logo</label>
         <div class="flex items-center gap-4">
           <input type="file" accept="image/*" @change="onLogoChange" class="block w-full text-sm" />
-          <img v-if="logoUrl" :src="logoUrl" class="w-16 h-16 object-cover rounded border border-yellow-400" />
         </div>
       </div>
 

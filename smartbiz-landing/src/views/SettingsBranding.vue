@@ -102,7 +102,6 @@
     <div v-if="settings.logoUrl" class="card shadow-sm border-0 text-center mt-5 p-4">
       <h5 class="text-primary mb-2">{{ settings.businessName }}</h5>
       <p class="text-muted">{{ settings.tagline }}</p>
-      <img :src="settings.logoUrl" alt="Logo" class="img-fluid rounded" style="max-height: 120px;">
       <div class="mt-3">
         <span class="badge me-2" :style="{backgroundColor: settings.primaryColor, color: '#fff'}">
           Primary

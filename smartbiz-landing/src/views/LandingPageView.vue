@@ -1,167 +1,151 @@
 <template>
-  <div class="min-vh-100 bg-white text-dark dark:bg-dark dark:text-white">
+  <div class="min-h-screen bg-white text-dark dark:bg-dark dark:text-white">
     <!-- 🌐 Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm py-2 px-3">
-      <div class="container-fluid justify-content-between">
-        <!-- 📛 Logo + Brand -->
-        <router-link to="/" class="navbar-brand d-flex align-items-center gap-2">
-          <img
-            src="@/assets/logo-circle.png"
-            alt="SmartBiz Logo"
-            class="rounded-circle shadow-sm"
-            style="width: 34px; height: 34px; object-fit: cover; background: #fff; border: 2px solid #FFD700;"
-          />
-          <span class="fw-bold fs-5 d-none d-md-inline" style="letter-spacing: -0.5px;">SmartBiz</span>
-        </router-link>
+    <nav class="flex items-center justify-between px-4 py-3 bg-primary shadow-sm">
+      <!-- 📛 Logo + Brand -->
+      <router-link to="/" class="flex items-center gap-2">
+        <img
+          src="/icons/logo.png"
+          alt="SmartBiz Logo"
+          class="rounded-full"
+          style="width: 36px; height: 36px; object-fit: cover; background: #fff; border: 2px solid #FFD700;"
+        />
+        <span class="text-white font-bold text-base hidden sm:inline">SmartBiz</span>
+      </router-link>
 
-        <!-- ☀️🌙 Theme & Auth -->
-        <div class="d-flex align-items-center gap-2">
-          <button @click="toggleTheme" class="btn btn-sm btn-light">
-            {{ isDark ? '☀️ Light' : '🌙 Dark' }}
-          </button>
-          <router-link to="/login" class="btn btn-sm btn-outline-light fw-semibold">
-            Login
-          </router-link>
-          <router-link to="/signup" class="btn btn-sm btn-warning fw-bold text-primary">
-            Sign Up
-          </router-link>
-        </div>
+      <!-- 🔐 Auth Buttons -->
+      <div class="flex gap-2">
+        <router-link to="/login" class="btn btn-sm btn-outline-light">Login</router-link>
+        <router-link to="/signup" class="btn btn-sm btn-warning text-primary fw-bold">Sign Up</router-link>
       </div>
     </nav>
 
     <!-- 🎯 Hero Section -->
-    <section class="bg-gradient-to-r from-primary to-info text-white py-5 text-center px-3">
-      <div class="container">
-        <img
-          src="@/assets/logo-circle.png"
-          alt="SmartBiz Logo"
-          class="mx-auto mb-4"
-          style="width: 90px; height: 90px; background: #fff; border-radius: 50%; border: 3px solid #FFD700;"
-        />
-        <h1 class="display-6 fw-bold mb-3">Automate Messaging Across All Platforms</h1>
-        <p class="lead mb-4">Connect WhatsApp, Telegram, SMS, and Email in one powerful dashboard.</p>
-        <div class="d-flex flex-column flex-md-row justify-content-center gap-3">
-          <router-link to="/signup" class="btn btn-warning btn-lg fw-bold text-primary">
-            Get Started Free (1 Month)
-          </router-link>
-          <button class="btn btn-outline-light btn-lg" @click="scrollToDemo">Watch Demo</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- 🎥 Demo Video -->
-    <section class="py-5 bg-light dark:bg-dark px-3">
-      <div class="container text-center">
-        <h2 class="fs-4 fw-bold mb-3">See How It Works</h2>
-        <video
-          class="w-100 rounded shadow mb-3"
-          controls
-          src="https://www.w3schools.com/html/mov_bbb.mp4"
-        ></video>
-        <p class="text-secondary">A quick tour on how SmartBiz automates your messaging workflow in real time.</p>
-      </div>
+    <section class="text-center px-4 py-6 bg-light dark:bg-dark">
+      <h1 class="text-xl sm:text-2xl font-bold mb-2 leading-snug text-primary dark:text-yellow-400">
+        Automate Messaging Across All Platforms
+      </h1>
+      <p class="text-sm text-gray-700 dark:text-gray-300 mb-4">
+        Connect WhatsApp, Telegram, SMS & Email in one smart dashboard.
+      </p>
+      <router-link to="/signup" class="btn btn-warning btn-glow text-primary fw-bold">
+        Get Started Free (1 Month)
+      </router-link>
     </section>
 
     <!-- 🛠️ Features -->
-    <section id="features" class="py-5 bg-white dark:bg-dark">
+    <section id="features" class="py-5 bg-white dark:bg-dark px-4">
       <div class="container">
-        <h2 class="fs-4 fw-bold text-center mb-4 text-primary dark:text-warning">Platform Features</h2>
-        <div class="row g-4">
-          <div v-for="feature in features" :key="feature.id" class="col-12 col-md-6 col-lg-4">
-            <div class="card h-100 border-0 shadow-sm">
-              <div class="card-body text-center">
-                <div class="fs-1 mb-3 text-warning">{{ feature.icon }}</div>
-                <h5 class="card-title fw-bold mb-2">{{ feature.title }}</h5>
-                <p class="card-text">{{ feature.desc }}</p>
-              </div>
-            </div>
+        <h2 class="text-center text-lg font-bold text-primary dark:text-yellow-400 mb-4">Platform Features</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div
+            v-for="feature in features"
+            :key="feature.id"
+            class="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-sm text-center hover:shadow-md transition"
+          >
+            <div class="text-3xl mb-2 text-warning">{{ feature.icon }}</div>
+            <h3 class="font-bold text-lg mb-1">{{ feature.title }}</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-300">{{ feature.desc }}</p>
           </div>
         </div>
       </div>
     </section>
 
     <!-- 🌟 Testimonials -->
-    <section class="py-5 bg-light dark:bg-secondary text-center px-3">
-      <div class="container">
-        <h2 class="fs-4 fw-bold mb-4 text-primary dark:text-warning">What Our Users Say</h2>
-        <div class="card border-0 shadow-lg mx-auto" style="max-width: 480px;">
-          <div class="card-body">
-            <p class="fs-5 fst-italic mb-2">“SmartBiz helped me automate WhatsApp replies while I sleep. I’ve tripled my customer response rate!”</p>
-            <p class="fw-bold mb-0">— Asha, Business Owner</p>
-          </div>
-        </div>
+    <section class="py-6 bg-light dark:bg-secondary text-center px-4">
+      <h2 class="text-lg font-bold text-primary dark:text-yellow-400 mb-4">What Our Users Say</h2>
+      <div class="max-w-md mx-auto bg-white dark:bg-gray-800 rounded shadow p-4">
+        <p class="italic">“SmartBiz helped me automate WhatsApp replies while I sleep. I’ve tripled my customer response rate!”</p>
+        <p class="font-bold mt-2">— Asha, Business Owner</p>
       </div>
     </section>
 
-    <!-- 🔻 Footer slot -->
+    <!-- 🔻 Footer Slot -->
     <slot />
   </div>
 </template>
+
 <script setup>
 import { ref, onMounted } from 'vue'
 
-// 🌟 Feature List
+/* ✅ 1. Platform Features (Smart Cards) */
 const features = ref([
-  { id: 1, icon: "📱", title: "WhatsApp Automation", desc: "Auto-reply and broadcast to clients on WhatsApp." },
-  { id: 2, icon: "🤖", title: "Telegram Bots", desc: "Engage users with customizable Telegram bots." },
-  { id: 3, icon: "✉️", title: "SMS Campaigns", desc: "Send bulk promotions and OTPs via SMS." },
-  { id: 4, icon: "📧", title: "Email Sequences", desc: "Automate marketing emails with rich templates." },
-  { id: 5, icon: "📊", title: "Unified Analytics", desc: "Get insights across all messaging channels." },
-  { id: 6, icon: "🔌", title: "API & Webhooks", desc: "Easily connect with your CRM or ERP." }
+  { id: 1, icon: '📱', title: 'WhatsApp Automation', desc: 'Auto-reply and broadcast to clients on WhatsApp.' },
+  { id: 2, icon: '🤖', title: 'Telegram Bots', desc: 'Engage users with customizable Telegram bots.' },
+  { id: 3, icon: '✉️', title: 'SMS Campaigns', desc: 'Send bulk promotions and OTPs via SMS.' },
+  { id: 4, icon: '📧', title: 'Email Sequences', desc: 'Automate marketing emails with rich templates.' },
+  { id: 5, icon: '📊', title: 'Unified Analytics', desc: 'Get insights across all messaging channels.' },
+  { id: 6, icon: '🔌', title: 'API & Webhooks', desc: 'Easily connect with your CRM or ERP.' },
 ])
 
-// 🌗 Dark Mode State
+/* ✅ 2. Dark Mode (Mobile Friendly Theme Toggle) */
 const isDark = ref(false)
 
-onMounted(() => {
-  isDark.value = document.documentElement.classList.contains("dark")
-})
-
-// 🌗 Toggle Theme
-function toggleTheme() {
-  isDark.value = !isDark.value
-  document.documentElement.classList.toggle("dark", isDark.value)
+const applyTheme = () => {
+  document.documentElement.classList.toggle('dark', isDark.value)
+  localStorage.setItem('theme', isDark.value ? 'dark' : 'light')
 }
 
-// 🎬 Scroll to Demo Video
-function scrollToDemo() {
-  const videoSection = document.querySelector("video")
-  if (videoSection) {
-    videoSection.scrollIntoView({ behavior: "smooth" })
+const detectTheme = () => {
+  const saved = localStorage.getItem('theme')
+  if (saved) {
+    isDark.value = saved === 'dark'
+  } else {
+    isDark.value = window.matchMedia('(prefers-color-scheme: dark)').matches
+  }
+  applyTheme()
+}
+
+onMounted(() => {
+  detectTheme()
+})
+
+const toggleTheme = () => {
+  isDark.value = !isDark.value
+  applyTheme()
+}
+
+/* ✅ 3. Scroll to Demo Section (Removed Video, but keep logic optional) */
+const scrollToDemo = () => {
+  const section = document.querySelector('#features')
+  if (section) {
+    section.scrollIntoView({ behavior: 'smooth' })
+  } else {
+    console.warn('📌 Feature section not found')
   }
 }
 </script>
 <style scoped>
-/* ✨ Fade In Animation */
-.animate-fade-in {
-  animation: fadeIn 1s ease-in-out both;
-}
-@keyframes fadeIn {
-  0% {
+/* 🎬 Smooth Entrance Animation */
+@keyframes fadeInSlide {
+  from {
     opacity: 0;
     transform: translateY(12px);
   }
-  100% {
+  to {
     opacity: 1;
     transform: translateY(0);
   }
+}
+.animate-fade-in {
+  animation: fadeInSlide 0.7s ease-out both;
 }
 
 /* 🎨 Brand Colors */
 .bg-primary {
   background-color: #1E40AF !important;
 }
-.bg-info {
-  background-color: #0B89B1 !important;
-}
 .text-primary {
   color: #1E40AF !important;
 }
 .text-warning {
-  color: #FF9E0B !important;
+  color: #FFA500 !important;
+}
+.bg-warning {
+  background-color: #FFD600 !important;
 }
 
-/* 🌗 Dark Mode Enhancements */
+/* 🌙 Dark Mode Styling */
 .dark .bg-dark {
   background-color: #0b1120 !important;
 }
@@ -175,51 +159,51 @@ function scrollToDemo() {
   color: #cbd5e1 !important;
 }
 
-/* 🧊 Utility Enhancements */
-.hover-shadow-sm:hover {
-  box-shadow: 0 0.5rem 1rem rgba(30, 64, 175, 0.15) !important;
-}
-.transition {
-  transition: all 0.3s ease-in-out;
-}
+/* ✨ Buttons & Hover */
 .btn-glow {
   transition: box-shadow 0.3s ease-in-out;
 }
 .btn-glow:hover {
-  box-shadow: 0 0 12px rgba(255, 214, 0, 0.6);
+  box-shadow: 0 0 16px rgba(255, 214, 0, 0.6);
+}
+.hover-shadow-sm:hover {
+  box-shadow: 0 0.5rem 1.2rem rgba(30, 64, 175, 0.15) !important;
 }
 
-/* 📱 Responsive Enhancements */
-@media (max-width: 768px) {
-  h1, .display-4 {
-    font-size: 1.75rem;
-  }
-  .btn-lg {
-    font-size: 1rem;
-    padding: 0.75rem 1.25rem;
-  }
-  .navbar-brand span {
-    font-size: 1.1rem;
-  }
-}
-
-/* 🧊 Elegant Card Hover */
-.card-hover:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.1);
+/* 🧊 Card Interaction */
+.card-hover {
   transition: all 0.3s ease;
 }
-
-/* 👇 Smooth Slide Effect */
-.fade-slide {
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeSlideIn 0.8s ease forwards;
+.card-hover:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.08);
 }
-@keyframes fadeSlideIn {
-  to {
-    opacity: 1;
-    transform: translateY(0);
+
+/* 📱 Mobile Responsiveness */
+@media (max-width: 768px) {
+  h1, .display-4, .display-6 {
+    font-size: 1.5rem !important;
+    line-height: 1.3;
+  }
+  .btn-lg {
+    font-size: 1rem !important;
+    padding: 0.5rem 1rem;
+  }
+  .navbar-brand span {
+    font-size: 1rem !important;
+  }
+  .navbar .btn {
+    padding: 0.3rem 0.7rem !important;
+    font-size: 0.9rem;
+  }
+  .container {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+  video {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.75rem;
   }
 }
 </style>

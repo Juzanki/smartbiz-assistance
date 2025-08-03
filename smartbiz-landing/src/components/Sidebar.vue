@@ -21,7 +21,6 @@
 
       <!-- 🔘 Brand -->
       <div class="flex items-center mb-6">
-        <img src="/icons/logo.png" alt="Logo" class="w-10 h-10 rounded-full bg-white border-2 border-yellow-400 mr-3" />
         <span class="text-xl font-bold text-yellow-400 hidden md:inline">SmartBiz</span>
       </div>
 

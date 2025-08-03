@@ -2,7 +2,6 @@
   <aside class="h-screen w-64 bg-dark-800 text-light flex flex-col border-r border-yellow-400">
     <!-- Logo -->
     <div class="flex items-center justify-center py-6 border-b border-gray-700">
-      <img src="/logo.png" alt="Logo" class="w-10 h-10 rounded-full mr-2" />
       <span class="text-yellow-400 font-bold text-xl">SmartInjectGPT</span>
     </div>
 

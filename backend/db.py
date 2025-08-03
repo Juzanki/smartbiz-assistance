@@ -1,64 +1,59 @@
-"""
-?? SmartBiz Assistance: PostgreSQL Database Configuration
+﻿"""
+📦 SmartBiz Assistance: PostgreSQL Database Configuration
 -------------------------------------------------------------
-?? Securely loads environment variables from `.env.local` or `.env.production`
-?? Initializes SQLAlchemy engine, session, and declarative base for ORM
+✅ Loads environment variables from `backend/.env.local` or `backend/.env.production`
+🛠️ Initializes SQLAlchemy engine, session, and declarative base for ORM
 """
 
 import os
 from pathlib import Path
+from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 
-# ============================ ?? BASE DIRECTORY ============================
+# ========================== 📂 BASE DIRECTORY =============================
 BASE_DIR = Path(__file__).resolve().parent.parent
+ENV_DIR = BASE_DIR / "backend"  # Env files are inside /backend
 
-# ============================ ?? ENV SWITCHING =============================
-# Detect active environment: 'railway' (production) or 'local' (development)
-ACTIVE_DB = os.getenv("ACTIVE_DB", "local").strip().lower()
+# ========================== 🌍 ENVIRONMENT DETECTION ======================
+# Decide between 'railway' (production) or 'local' (development)
+env_choice = os.environ.get("ACTIVE_DB", "local").strip().lower()
+env_file = ENV_DIR / (".env.production" if env_choice == "railway" else ".env.local")
 
-# Load .env file safely
+# Load environment variables
+if not env_file.exists():
+    raise FileNotFoundError(f"❌ ENV file not found → {env_file}")
+load_dotenv(dotenv_path=env_file)
 
-print(f"? Environment Loaded ? ACTIVE_DB = {ACTIVE_DB}")
+print(f"✅ Environment loaded from: {env_file.name} → ACTIVE_DB = {env_choice}")
 
-# ============================ ?? DATABASE URL ==============================
-# Load appropriate DATABASE_URL based on environment
+# ========================== 🛢️ DATABASE URL ==============================
+# Read the correct database URL from environment
 DATABASE_URL = os.getenv(
-    "RAILWAY_DATABASE_URL" if ACTIVE_DB == "railway" else "LOCAL_DATABASE_URL"
+    "RAILWAY_DATABASE_URL" if env_choice == "railway" else "LOCAL_DATABASE_URL"
 )
 
 if not DATABASE_URL:
     raise RuntimeError(
-        f"? DATABASE_URL not found.\n?? Expected: "
-        f"{'RAILWAY_DATABASE_URL' if ACTIVE_DB == 'railway' else 'LOCAL_DATABASE_URL'}"
+        f"❌ DATABASE_URL not found.\n"
+        f"👉 Expected: {'RAILWAY_DATABASE_URL' if env_choice == 'railway' else 'LOCAL_DATABASE_URL'}"
     )
 
-# ============================ ?? DATABASE ENGINE ===========================
+# ========================== ⚙️ SQLALCHEMY ENGINE =========================
 engine = create_engine(
     DATABASE_URL,
-    pool_pre_ping=True,  # Auto-check connection health
-    echo=False           # Set to True to enable SQL log output
+    pool_pre_ping=True,   # Auto-check DB connection
+    echo=False            # Set to True to debug raw SQL queries
 )
 
-# ============================ ?? SESSION CREATION ==========================
-SessionLocal = sessionmaker(
-    autocommit=False,
-    autoflush=False,
-    bind=engine
-)
-
-# ============================ ?? DECLARATIVE BASE ==========================
+# ========================== 🧠 SESSION & BASE =============================
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
-# Optional: Auto-create tables (can be removed in production)
-# from your_models_module import *   # Replace with actual models file
-# Base.metadata.create_all(bind=engine)
-
-# ============================ ?? DB DEPENDENCY FOR FASTAPI =================
+# ========================== 🔁 FASTAPI DB DEPENDENCY ======================
 def get_db():
     """
-    Provides a SQLAlchemy session for FastAPI routes.
-    Ensures automatic closing of DB session after request.
+    Yields a database session for FastAPI routes, auto-closes after use.
     """
     db = SessionLocal()
     try:

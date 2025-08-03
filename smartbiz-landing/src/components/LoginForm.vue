@@ -4,7 +4,6 @@
       
       <!-- Logo -->
       <div class="flex justify-center">
-        <img src="@/assets/logo.svg" alt="SmartBiz Logo" class="h-16 w-16 rounded-full shadow border dark:border-gray-600" />
       </div>
 
       <!-- Title -->

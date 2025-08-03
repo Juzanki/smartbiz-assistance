@@ -5,7 +5,6 @@
       <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
         <!-- Logo + App Name -->
         <div class="flex items-center gap-3">
-          <img src="/assets/logo.svg" alt="SmartBiz" class="w-10 h-10 rounded" />
           <span class="text-xl font-bold text-blue-900 dark:text-white">SmartBiz</span>
         </div>
 

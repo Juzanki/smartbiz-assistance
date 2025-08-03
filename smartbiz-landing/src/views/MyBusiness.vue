@@ -103,7 +103,6 @@ const newBusiness = ref({
   logo: ''
 })
 
-const defaultLogo = '/default-logo.png' // Customize path for default logo
 
 onMounted(() => {
   fetchBusinesses()

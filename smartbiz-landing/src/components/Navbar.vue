@@ -2,7 +2,6 @@
   <nav class="bg-blue-800 text-white p-4 flex items-center justify-between shadow-md">
     <!-- 🔰 Logo & App Name -->
     <div class="flex items-center space-x-2">
-      <img src="/icons/logo.png" alt="SmartBiz Logo" class="h-10 w-10 rounded-full bg-white" />
       <span class="text-xl font-bold tracking-wide">SmartBiz</span>
     </div>
 

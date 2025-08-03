@@ -3,7 +3,6 @@
     <!-- Logo -->
     <div class="mb-8">
       <img
-        src="@/assets/logo-circle.png"
         alt="SmartBiz Logo"
         class="w-12 h-12 rounded-full shadow border-2 border-yellow-400 bg-white object-contain"
       />

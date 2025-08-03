@@ -6,7 +6,6 @@
       aria-label="Sidebar"
     >
       <div class="flex items-center gap-3 text-2xl font-bold mb-10">
-        <img src="@/assets/logo-circle.png" class="w-9 h-9 rounded-full bg-white border border-yellow-400 shadow" />
         <span>SmartBiz</span>
       </div>
       <nav class="flex-1 space-y-2">

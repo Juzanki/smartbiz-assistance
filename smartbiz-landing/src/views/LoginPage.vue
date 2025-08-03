@@ -7,7 +7,6 @@
       <!-- LOGO Centered -->
       <div class="d-flex flex-column align-items-center mb-4 mt-2">
         <img
-          src="@/assets/logo-circle.png"
           alt="SmartBiz Logo"
           class="rounded-circle border border-warning mb-3 shadow"
           style="width:64px;height:64px;object-fit:contain;background:#fff;"
