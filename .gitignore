@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿# 🔒 Python Virtual Environment
 venv/
 .venv/
@@ -35,3 +36,120 @@ dev-dist/
 
 # Local Netlify folder
 .netlify
+=======
+# 🔐 Mafaili ya mazingira ya siri
+.env
+.env.production
+.env.local
+*.env
+.env.*.backup
+.env.*.example
+*.secrets
+*.key
+*.pem
+*.crt
+
+# 🧠 Cache ya Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# 🛠️ Editor na system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# 📦 Mafaili ya package management
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# 💻 Logs na Debug files
+*.log
+logs/
+*.sqlite3
+*.sqlite
+*.db-journal
+
+# 📜 SQLite fallback (ikiwa umetumia wakati wa development)
+*.db
+
+# 💾 Backup zenye zip files
+*.zip
+SmartBiz_Backups/
+*.bak.zip
+
+# ☁️ Deployment platform files
+railway.json
+render.yaml
+Procfile
+
+# 📦 Virtual environment (venv)
+venv/
+.venv/
+ENV/
+env/
+python_env/
+
+# 🧪 Testing artifacts
+htmlcov/
+.coverage
+.cache/
+.pytest_cache/
+
+# 🧪 Coverage reports
+coverage.xml
+nosetests.xml
+test-results/
+
+# 📦 Compiled assets (kama unatumia frontend ndani ya backend)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# 🌐 Frontend tools
+*.map
+*.cache
+.eslintcache
+*.DS_Store
+*.idea/
+
+# 🐳 Docker
+*.pid
+docker-compose.override.yml
+.dockerignore
+
+# 🧾 Misc
+*.bak
+*.swp
+*.tmp
+*.old
+
+# 🔒 GitHub backup files
+*.orig
+
+# ⚠️ Auto-generated configs
+.settings/
+*.code-workspace
+
+# 🛡️ PowerShell metadata
+*.ps1~
+*.ps1.bak
+
+# 📷 Image metadata or generated diagrams (optional)
+*.svg
+*.pdf
+*.drawio
+*.plantuml
+
+# 🔄 Files for syncing secrets or local-only configs
+*.local.env
+*.dev.env
+.envrc
+>>>>>>> 39aaa5419d4d78972badb2e9bf74eb1ffebb8a0d
